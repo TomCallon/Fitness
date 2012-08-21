@@ -883,15 +883,6 @@
 			path = WoJianMei;
 			sourceTree = "<group>";
 		};
-		4A79F14115D01BF100B1E1C3 /* UIBadgeView */ = {
-			isa = PBXGroup;
-			children = (
-				4A79F13F15D01BED00B1E1C3 /* UIBadgeView.h */,
-				4A79F14015D01BED00B1E1C3 /* UIBadgeView.m */,
-			);
-			name = UIBadgeView;
-			sourceTree = "<group>";
-		};
 		4A7BFD1215C4B3F000C79C77 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1022,7 +1013,8 @@
 			children = (
 				4AB4CC0515D36BF400548562 /* UIButtonExt.h */,
 				4AB4CC0615D36BF400548562 /* UIButtonExt.m */,
-				4A79F14115D01BF100B1E1C3 /* UIBadgeView */,
+				4A79F13F15D01BED00B1E1C3 /* UIBadgeView.h */,
+				4A79F14015D01BED00B1E1C3 /* UIBadgeView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1279,9 +1271,9 @@
 		4ABD0E1015D800EF00B08DDA /* WeiBlog Share */ = {
 			isa = PBXGroup;
 			children = (
+				4ABD0E1115D8032400B08DDA /* ZJTGloble.h */,
 				4A11B55215D8BB8000DEC92A /* UI -Icons */,
 				4A11B54C15D8BAD600DEC92A /* Other VCs */,
-				4ABD0E1115D8032400B08DDA /* ZJTGloble.h */,
 				4ABD0DC015D7FC7700B08DDA /* WeiBlogEngine */,
 				4ABD0E0F15D800CC00B08DDA /* Image Browser */,
 				4ABD0DD815D7FDFC00B08DDA /* WeiBlog -Model */,
