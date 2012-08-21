@@ -98,8 +98,8 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
-//     self.tableView.hidden = FALSE;
-//    [self.tableView reloadData];
+    self.tableView.hidden = FALSE;
+    [self.tableView reloadData];
     
 }
 
@@ -468,7 +468,6 @@
     if (!cell) {
         
         cell = [[[VideoListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[VideoListCell getCellIdentifier]] autorelease];
-        
     }
     
     cell.VideoListCellDelegate = self;
@@ -484,12 +483,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    
-//    UIViewController *viewController = [self.navigationController.storyboard instantiateViewControllerWithIdentifier:@"Settings"];
-//    
-//    [self.navigationController pushViewController:viewController animated:YES];
-//    NSLog(@"indexpath.row %d",indexPath.row);
-
   [self performSegueWithIdentifier:@"VideoSegue" sender:self];   
 }
 
@@ -499,21 +492,6 @@
     }
     return  [VideoListCell getCellHeight];
 }
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{    // fixed font style. use custom view (UILabel) if you want something different
-//
-//    NSArray *titleForHeaderInSectionArray =[NSArray arrayWithObjects:@"Upper boddy",@"Middle body",@"Lower boddy", nil];
-//    if (section==0) {
-//        return [titleForHeaderInSectionArray objectAtIndex:0];
-//    } else if (section==1) {
-//        return [titleForHeaderInSectionArray objectAtIndex:1];
-//    } else if (section==2) {
-//        return [titleForHeaderInSectionArray objectAtIndex:2];
-//    }
-//    
-    return nil;
-}
-
 
 
 
@@ -532,8 +510,6 @@
     [self.myFollowCountView setShadowEnabled:NO];
     [self.myFollowCountView setBadgeColor:[UIColor redColor]];
     [self.myFollowButton addSubview:_myFollowCountView];
-    
-    
     [self reloadMyFollowCount];
 }
 
@@ -627,7 +603,7 @@
     NSString *productIdentifier = (NSString *) notification.object;
     NSLog(@"Purchased: %@", productIdentifier);
     
-    //    [self.tableView reloadData];
+    [self.tableView reloadData];
     
 }
 
@@ -828,8 +804,6 @@
                      }];
     
 }
-
-
 
 #pragma mark -
 #pragma mark BodyButtons Methods

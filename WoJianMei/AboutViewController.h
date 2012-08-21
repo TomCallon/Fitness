@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TomCallonViewController.h"
 
-@interface AboutViewController : UIViewController
+@interface AboutViewController : TomCallonViewController
 
 @end

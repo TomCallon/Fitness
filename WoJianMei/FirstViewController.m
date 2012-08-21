@@ -65,9 +65,6 @@ enum WORKOUT_TIME_TYPE {
         default:
             break;
     } 
-    
-    [_theMovie release];
-
 }
 
 #pragma mark - View lifecycle
@@ -81,8 +78,10 @@ enum WORKOUT_TIME_TYPE {
     
     UIImage *bgImage = [UIImage strectchableImageName:@"tu_46.png"];
     UIImage *selectImage = [UIImage strectchableImageName:@"tu_39-15.png"];
+      PPSegmentControl *segmentController = [[PPSegmentControl alloc]initWithItems:titleArray defaultSelectIndex:0 frame:CGRectMake(7, 40, 306, 33)];
     
-    _titlePPSegControl = [[PPSegmentControl alloc]initWithItems:titleArray defaultSelectIndex:0 frame:CGRectMake(7, 40, 306, 33)];
+    self.titlePPSegControl = segmentController;
+    [segmentController release];
     
     [self.titlePPSegControl setBackgroundImage:bgImage];
     [self.titlePPSegControl setSelectedSegmentImage:selectImage];
@@ -101,9 +100,7 @@ enum WORKOUT_TIME_TYPE {
     
     
     [self hideTabBar];
-    
-    [self.navigationItem.backBarButtonItem  setTitle:@"back"];
-    
+        
 //    self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Today" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonClick)] autorelease];
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc]
                                       
@@ -118,7 +115,7 @@ enum WORKOUT_TIME_TYPE {
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
                                      
-                                     initWithTitle:@"撤退"
+                                     initWithTitle:@"返回"
                                      
                                      style:UIBarButtonItemStylePlain
                                      
@@ -143,6 +140,7 @@ enum WORKOUT_TIME_TYPE {
 
 - (void)hideTabBar {
     UITabBar *tabBar = self.tabBarController.tabBar;
+    NSLog(@"tell me about the tabbar %@",[tabBar description]);
     UIView *parent = tabBar.superview; // UILayoutContainerView
     UIView *content = [parent.subviews objectAtIndex:0];  // UITransitionView
     UIView *window = parent.superview;
@@ -164,7 +162,6 @@ enum WORKOUT_TIME_TYPE {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     self.titlePPSegControl = nil;
-    [self.theMovie pause];
 
 }
 
@@ -231,7 +228,7 @@ enum WORKOUT_TIME_TYPE {
     self.theMovie.scalingMode = MPMovieScalingModeAspectFit;
 
     
-    [self.view addSubview:self.theMovie.view];
+    [self.view addSubview:_theMovie.view];
     
 //    双击屏幕全屏
      [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isFullScreen"];
@@ -294,6 +291,7 @@ enum WORKOUT_TIME_TYPE {
 - (void)clickSegControl:(id)sender{
 
     PPSegmentControl* segControl = sender;
+    [self.theMovie stop];
     switch ([segControl selectedSegmentIndex]) {
         case TOP_10:
             NSLog(@"show  10");
@@ -306,7 +304,6 @@ enum WORKOUT_TIME_TYPE {
         case TOP_20:
             NSLog(@"show 20");
             [self video_play:@"03"];
-
             break;
         case TOP_25:
             NSLog(@"show 25");
@@ -315,7 +312,6 @@ enum WORKOUT_TIME_TYPE {
         case TOP_30:
             NSLog(@"show 30");
             [self video_play:@"05"];
-
             break;
 
         default:
