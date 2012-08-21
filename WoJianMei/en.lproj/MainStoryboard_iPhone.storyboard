@@ -586,11 +586,11 @@
         <image name="@2x.png" width="16" height="16"/>
         <image name="Icon-Small.png" width="32" height="32"/>
         <image name="adductor-exercises.jpg" width="300" height="300"/>
-        <image name="data_m_1@2x.png" width="106" height="74"/>
-        <image name="data_m_2@2x.png" width="106" height="74"/>
-        <image name="data_menu_1@2x.png" width="128" height="78"/>
+        <image name="data_m_1@2x.png" width="16" height="16"/>
+        <image name="data_m_2@2x.png" width="16" height="16"/>
+        <image name="data_menu_1@2x.png" width="16" height="16"/>
         <image name="first" width="16" height="16"/>
-        <image name="loginWeibo.png" width="239" height="48"/>
+        <image name="loginWeibo.png" width="16" height="16"/>
         <image name="publish_button_32.gif" width="142" height="32"/>
         <image name="star2.png" width="16" height="16"/>
     </resources>
