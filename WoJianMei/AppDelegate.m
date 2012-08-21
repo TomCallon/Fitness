@@ -108,7 +108,7 @@
     self.tabBarController.viewControllers = controllers;
     self.tabBarController.selectedIndex = TAB_REALTIME_SCORE ;
     
-	[controllers release];
+   [controllers release];
     
     
 }

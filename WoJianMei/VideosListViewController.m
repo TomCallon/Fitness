@@ -470,6 +470,8 @@
         cell = [[[VideoListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[VideoListCell getCellIdentifier]] autorelease];
     }
     
+    
+    
     cell.VideoListCellDelegate = self;
     cell.indexPath = indexPath;
     Video *video  = [_dataList objectAtIndex:indexPath.row];
