@@ -11,7 +11,7 @@
 ////处理图片缓存
 #import "HHNetDataCacheManager.h"
 #import "user.h"
-
+#import "ZJTGloble.h"
 
 
 @interface MyselfViewController ()
@@ -38,8 +38,10 @@
 
 -(void)dealloc{
     [super dealloc];
-//    self.avatarImage = nil;
-//    self.user = nil;
+    
+    [self.headerVImageV release];
+    [self.avatarImage  release];
+    [self.user release];
 }
 - (void)viewDidLoad
 {
@@ -49,18 +51,19 @@
 //     weiBoMessageManager = [WeiBoMessageManager getInstance];
 //    [weiBoMessageManager getGeocodeGeoToAddress:nil];
 
-//    ////获取用户微博个人信息
+    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getAvatar:)         name:HHNetDataCacheNotification object:nil];
-//
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didGetGeocodeGeoToAddress:) name:MMSinaGotGeocodeGeoToAddress object:nil];
-//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mmRequestFailed:)   name:MMSinaRequestFailed object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSucceed)       name:DID_GET_TOKEN_IN_WEB_VIEW object:nil];
+    
+
 //    if (avatarImage) {
 //        self.headerVImageV.image = avatarImage;
 //    }
 //    else {
 //        [[HHNetDataCacheManager getInstance] getDataWithURL:user.profileLargeImageUrl];
 //    }
-    
+//    
 
 }
 
@@ -68,10 +71,30 @@
 
     [super viewDidUnload];
     
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:MMSinaGotUserStatus        object:nil];
-//    [[NSNotificationCenter defaultCenter]removeObserver:self name:MMSinaGotGeocodeGeoToAddress object:nil];
+    self.headerVImageV = nil;
+//    
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:HHNetDataCacheNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:MMSinaRequestFailed        object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:DID_GET_TOKEN_IN_WEB_VIEW  object:nil];    
+//
     
-    
+}
+
+
+-(void)getAvatar:(NSNotification*)sender
+{
+    NSLog(@"getAvatar:(NSNotification*)sender");
+   
+}
+
+
+-(void)mmRequestFailed:(id)sender{
+    NSLog(@"mmRequestFailed:(id)sender");
+}
+
+-(void)loginSucceed
+{
+    shouldLoad = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -79,13 +102,6 @@
     [super viewWillAppear:YES];
 
 }
-
-
--(void)didGetGeocodeGeoToAddress:(NSNotification*)sender{
-    
-    NSLog(@"%@",[sender description]);
-}
-
 
 - (void)didReceiveMemoryWarning
 {

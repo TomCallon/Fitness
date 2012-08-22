@@ -20,6 +20,10 @@
     
     WeiBoMessageManager *weiBoMessageManager;
      User *user;
+    
+    
+    BOOL                shouldShowIndicator;
+    BOOL                shouldLoad;
 
 }
 
