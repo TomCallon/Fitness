@@ -56,6 +56,8 @@
 @synthesize showBigImageViewController =_showBigImageViewController;
 @synthesize hud =_hud;
 
+@synthesize userID;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -78,6 +80,8 @@
     [_myFollowCountView  release];
     [_showBigImageViewController release];
     
+    self.userID = nil;
+
     [super dealloc];
 
 }
@@ -153,7 +157,18 @@
     [defaultNotifCenter addObserver:self selector:@selector(didGetUserInfo:)    name:MMSinaGotUserInfo          object:nil];
     [defaultNotifCenter addObserver:self selector:@selector(relogin)            name:NeedToReLogin              object:nil];
     [defaultNotifCenter addObserver:self selector:@selector(didGetUnreadCount:)                   name:MMSinaGotUnreadCount object:nil];
+    
+    //////获得地址
+     [defaultNotifCenter addObserver:self selector:@selector(didGetGeocodeGeoToAddress::)                   name:MMSinaGotGeocodeGeoToAddress object:nil];
+}
 
+-(void)didGetUserID:(NSNotification*)sender
+{
+    self.userID = sender.object;
+    [[NSUserDefaults standardUserDefaults] setObject:userID forKey:USER_STORE_USER_ID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [weiBoMessageManager getUserInfoWithUserID:[userID longLongValue]];
 
 }
 
@@ -198,6 +213,8 @@
 
     [[ZJTStatusBarAlertWindow getInstance] hide];
 
+        
+    
 //    Upper Area
 //    Trapezius ( neck ) >
 //    Deltoid ( shoulders ) >
@@ -373,6 +390,10 @@
 
       
     [self clickButtons:self.selectedButton];
+    
+    
+    
+    
 }
 
 - (void)viewDidUnload
@@ -385,8 +406,9 @@
     [defaultNotifCenter removeObserver:self name:MMSinaGotUserInfo          object:nil];
     [defaultNotifCenter removeObserver:self name:NeedToReLogin              object:nil];
     [defaultNotifCenter removeObserver:self name:MMSinaGotUnreadCount       object:nil];
+/////////
+    [defaultNotifCenter removeObserver:self name:MMSinaGotGeocodeGeoToAddress object:nil];
 
-    
     self.hud = nil;
     self.selectedButton = nil;
     self.myFollowButton =nil;
@@ -633,70 +655,70 @@
 -(void)didClickSinaWeiBlogButton:(id)sender atIndex:(NSIndexPath *)indexPath{
   
     Video *video = [_dataList objectAtIndex:indexPath.row];
-
-    if(kCFCoreFoundationVersionNumber >kCFCoreFoundationVersionNumber_iOS_5_1)
-    {
-        NSLog( @"After Version 5.0" );
-        // 首先判断服务器是否可以访问
-        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo]) {
-            NSLog(@"Available server of sinaWeiBlog");
-            
-            // 使用SLServiceTypeSinaWeibo来创建一个新浪微博view Controller
-            SLComposeViewController *socialVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
-            
-            // 写一个bolck，用于completionHandler的初始化
-            SLComposeViewControllerCompletionHandler myBlock = ^(SLComposeViewControllerResult result) {
-                if (result == SLComposeViewControllerResultCancelled) {
-                    NSLog(@"cancelled\\");
-                } else
-                {
-                    NSLog(@"done\\");
-                }
-                [socialVC dismissViewControllerAnimated:YES completion:Nil];
-            };
-            // 初始化completionHandler，当post结束之后（无论是done还是cancell）该blog都会被调用
-            socialVC.completionHandler = myBlock;
-            
-            // 给view controller初始化默认的图片，url，文字信息
-            UIImage *shareImage = video.image;
-            
-            NSURL *url = [NSURL URLWithString:@"www.zhonghuafitness.com"];
-            NSString *workMethod = [NSString stringWithFormat:@"在中华健美客户端的帮助下,我练习了<<%@>>%@,每组%@,一共%@",video.title,video.workOut.sets,video.workOut.repeatTimes,video.workOut.workOutTimeLength];
-
-            [socialVC setInitialText:workMethod];
-            [socialVC addImage:shareImage];
-            [socialVC addURL:url];
-            
-            // 以模态的方式展现view controller
-            [self  presentViewController:socialVC animated:YES completion:Nil];
-            
-        } else {
-            NSLog(@"UnAvailable\\");
-        }
-    }
-    else
-    {
-        NSLog( @"Version 4.0 or earlier" );
-        TwitterVC *tv = [[TwitterVC alloc]initWithNibName:@"TwitterVC" bundle:nil];
-        tv.demoWorkOutImage = [video image];
-        
-        ///练习了3组，4次，共30分钟；
-        tv.demoWorkOutMethods = [NSString stringWithFormat:@"<<%@>>%@,每组%@,一共%@",video.title,video.workOut.sets,video.workOut.repeatTimes,video.workOut.workOutTimeLength];
-        
-        [self.navigationController pushViewController:tv animated:YES];
-        [tv release];
-
-    }
+//
+//    if(kCFCoreFoundationVersionNumber >kCFCoreFoundationVersionNumber_iOS_5_1)
+//    {
+//        NSLog( @"After Version 5.0" );
+//        // 首先判断服务器是否可以访问
+//        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo]) {
+//            NSLog(@"Available server of sinaWeiBlog");
+//            
+//            // 使用SLServiceTypeSinaWeibo来创建一个新浪微博view Controller
+//            SLComposeViewController *socialVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
+//            
+//            // 写一个bolck，用于completionHandler的初始化
+//            SLComposeViewControllerCompletionHandler myBlock = ^(SLComposeViewControllerResult result) {
+//                if (result == SLComposeViewControllerResultCancelled) {
+//                    NSLog(@"cancelled\\");
+//                } else
+//                {
+//                    NSLog(@"done\\");
+//                }
+//                [socialVC dismissViewControllerAnimated:YES completion:Nil];
+//            };
+//            // 初始化completionHandler，当post结束之后（无论是done还是cancell）该blog都会被调用
+//            socialVC.completionHandler = myBlock;
+//            
+//            // 给view controller初始化默认的图片，url，文字信息
+//            UIImage *shareImage = video.image;
+//            
+//            NSURL *url = [NSURL URLWithString:@"www.zhonghuafitness.com"];
+//            NSString *workMethod = [NSString stringWithFormat:@"在中华健美客户端的帮助下,我练习了<<%@>>%@,每组%@,一共%@",video.title,video.workOut.sets,video.workOut.repeatTimes,video.workOut.workOutTimeLength];
+//
+//            [socialVC setInitialText:workMethod];
+//            [socialVC addImage:shareImage];
+//            [socialVC addURL:url];
+//            
+//            // 以模态的方式展现view controller
+//            [self  presentViewController:socialVC animated:YES completion:Nil];
+//            
+//        } else {
+//            NSLog(@"UnAvailable\\");
+//        }
+//    }
+//    else
+//    {
+//        NSLog( @"Version 4.0 or earlier" );
+//        TwitterVC *tv = [[TwitterVC alloc]initWithNibName:@"TwitterVC" bundle:nil];
+//        tv.demoWorkOutImage = [video image];
+//        
+//        ///练习了3组，4次，共30分钟；
+//        tv.demoWorkOutMethods = [NSString stringWithFormat:@"<<%@>>%@,每组%@,一共%@",video.title,video.workOut.sets,video.workOut.repeatTimes,video.workOut.workOutTimeLength];
+//        
+//        [self.navigationController pushViewController:tv animated:YES];
+//        [tv release];
+//
+//    }
     
-//    NSLog( @"Version 4.0 or earlier" );
-//    TwitterVC *tv = [[TwitterVC alloc]initWithNibName:@"TwitterVC" bundle:nil];
-//    tv.demoWorkOutImage = [video image];
-//    
-//    ///练习了3组，4次，共30分钟；
-//    tv.demoWorkOutMethods = [NSString stringWithFormat:@"<<%@>>%@,每组%@,一共%@",video.title,video.workOut.sets,video.workOut.repeatTimes,video.workOut.workOutTimeLength];
-//    
-//    [self.navigationController pushViewController:tv animated:YES];
-//    [tv release];
+    NSLog( @"Version 4.0 or earlier" );
+    TwitterVC *tv = [[TwitterVC alloc]initWithNibName:@"TwitterVC" bundle:nil];
+    tv.demoWorkOutImage = [video image];
+    
+    ///练习了3组，4次，共30分钟；
+    tv.demoWorkOutMethods = [NSString stringWithFormat:@"<<%@>>%@,每组%@,一共%@",video.title,video.workOut.sets,video.workOut.repeatTimes,video.workOut.workOutTimeLength];
+    
+    [self.navigationController pushViewController:tv animated:YES];
+    [tv release];
 
 }
 
@@ -705,8 +727,7 @@
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-   
-    
+
     enum BUTTON_INDEX_TYPE {
         BUY_IT_NEXT_TIME,
         BUT_IT_NOW,

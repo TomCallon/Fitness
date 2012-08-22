@@ -376,22 +376,12 @@ static WeiBoMessageManager * instance=nil;
 }
 
 
-
-
-
 ///根据经度纬度获取地理位置名称
 -(void)didGetGeocodeGeoToAddress:(NSDictionary *)dic{
 
     NSNotification *notification = [NSNotification notificationWithName:MMSinaGotGeocodeGeoToAddress object:dic];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
-
-
-
-
-
-
-
 
 
 @end

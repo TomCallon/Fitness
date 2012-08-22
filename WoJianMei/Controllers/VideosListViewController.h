@@ -48,6 +48,8 @@
     NSNotificationCenter *defaultNotifCenter;
     BOOL                shouldLoad;
 
+////////weibo
+    NSString *userID;
 
 
     
@@ -61,6 +63,8 @@
 @property (nonatomic ,retain) ShowBigImageViewController *showBigImageViewController;
 @property (nonatomic ,retain)  MBProgressHUD *hud;
 
+////////weibo
+@property (nonatomic, copy)     NSString *userID;
 
 
 - (IBAction)clickButtons:(id)sender;

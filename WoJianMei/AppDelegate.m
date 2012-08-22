@@ -117,9 +117,9 @@
 
 - (void)customizeInterface
 {
-    UIImage* tabBarBackground = [UIImage imageNamed:@"tabbar.png"];
-    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selection-tab.png"]];
+//    UIImage* tabBarBackground = [UIImage imageNamed:@"tabbar.png"];
+//    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
+//    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selection-tab.png"]];
     
 }
 
@@ -132,7 +132,6 @@
     [[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppFitnessIAPHelper sharedHelper]];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    
    [self customizeInterface];
    [self initTabViewControllers];
    [self.window setRootViewController:self.tabBarController];
