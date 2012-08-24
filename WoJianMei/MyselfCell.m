@@ -9,6 +9,7 @@
 #import "MyselfCell.h"
 
 @implementation MyselfCell
+@synthesize delegate;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -17,6 +18,23 @@
         // Initialization code
     }
     return self;
+}
+
+
+
++ (MyselfCell*) createCell:(id)delegate{
+    
+    return nil;
+}
+
++ (NSString*)getCellIdentifier{
+    
+    return @"MyselfCell";
+
+}
++ (CGFloat)getCellHeight{
+    
+    return 23;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

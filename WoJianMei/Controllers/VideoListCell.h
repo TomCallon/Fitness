@@ -6,6 +6,8 @@
 //  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
 //
 
+#import "TomCallonTableViewCell.h"
+
 
 
 @class Video;
@@ -16,16 +18,17 @@
 - (void)didClickFollowButton:(id)sender atIndex:(NSIndexPath*)indexPath;
 - (void)didClickBuyButton:(id)sender atIndex:(NSIndexPath *)indexPath;
 - (void)didClickSinaWeiBlogButton:(id)sender atIndex:(NSIndexPath *)indexPath;
-- (void)clickShowBigImage:(id)sender;
-
-
+- (void)clickShowBigImage:(id)sender atIndex:(NSIndexPath *)indexPath;
+;
 @end
-@interface VideoListCell : UITableViewCell
+
+
+
+@interface VideoListCell : TomCallonTableViewCell
 {
-    id<VideoListCellDelegate>VideoListCellDelegate;
+    id<VideoListCellDelegate>delegate;
     
-     NSIndexPath *_indexPath;    
-    UIButton *_followButton;
+     UIButton *_followButton;
     
     
 }
@@ -38,11 +41,7 @@
 @property (retain, nonatomic) IBOutlet OHAttributedLabel *priceLabel;
 @property (retain, nonatomic) IBOutlet UIButton *followButton;
 
-
-@property (nonatomic, retain) NSIndexPath *indexPath;
-
-
-@property (nonatomic, assign) id<VideoListCellDelegate>VideoListCellDelegate;
+@property (nonatomic, assign) id<VideoListCellDelegate>delegate;
 
 + (VideoListCell*) createCell:(id)delegate;
 + (NSString*)getCellIdentifier;

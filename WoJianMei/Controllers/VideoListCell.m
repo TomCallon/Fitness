@@ -20,8 +20,7 @@
 @synthesize upLabel;
 @synthesize downLabel;
 @synthesize priceLabel;
-@synthesize VideoListCellDelegate;
-@synthesize indexPath =_indexPath;
+@synthesize delegate;
 @synthesize followButton =_followButton;
 
 
@@ -34,7 +33,6 @@
     [upLabel release];
     [downLabel release];
     [priceLabel release];
-    [_indexPath release];
     [_followButton release];
     [super dealloc];
 }
@@ -100,7 +98,6 @@
 }
 
 -(void)updateFollow:(Video*)video{
-    NSLog(@"Tell me again man %f,",[video.isFollow floatValue]);
     if(video.isFollow == [NSNumber numberWithBool:YES]){
         [self.followButton setImage:[UIImage imageNamed:@"star2.png"] forState:UIControlStateNormal];
     }else
@@ -110,28 +107,28 @@
 
 - (IBAction)clickFollowButton:(id)sender
 {
-    if (VideoListCellDelegate && [VideoListCellDelegate respondsToSelector:@selector(didClickFollowButton:atIndex:)]) {
-        [self.VideoListCellDelegate didClickFollowButton:sender atIndex:_indexPath];
+    if (delegate && [delegate respondsToSelector:@selector(didClickFollowButton:atIndex:)]) {
+        [self.delegate didClickFollowButton:sender atIndex:_indexPath];
     }
 }
 
 - (IBAction)clickBuyButton:(id)sender
 {    
-    if (VideoListCellDelegate && [VideoListCellDelegate respondsToSelector:@selector(didClickBuyButton:atIndex:)]) {
-        [self.VideoListCellDelegate didClickBuyButton:sender atIndex:_indexPath];
+    if (delegate && [delegate respondsToSelector:@selector(didClickBuyButton:atIndex:)]) {
+        [self.delegate didClickBuyButton:sender atIndex:_indexPath];
     }
 }
 - (IBAction)clickSinaWeiBlogButton:(id)sender{
-    if (VideoListCellDelegate && [VideoListCellDelegate respondsToSelector:@selector(didClickSinaWeiBlogButton:atIndex:)]) {
-        [self.VideoListCellDelegate didClickSinaWeiBlogButton:sender atIndex:_indexPath];
+    if (delegate && [delegate respondsToSelector:@selector(didClickSinaWeiBlogButton:atIndex:)]) {
+        [self.delegate didClickSinaWeiBlogButton:sender atIndex:_indexPath];
     }
 
 }
 
-- (IBAction)clickShowBigImage:(id)sender{
-    NSLog(@"click showbu %d",[sender retainCount]);
-    if (VideoListCellDelegate && [VideoListCellDelegate respondsToSelector:@selector(clickShowBigImage:)]) {
-        [self.VideoListCellDelegate clickShowBigImage:sender];
+- (IBAction)clickShowBigImage:(id)sender {
+    if (delegate && [delegate respondsToSelector:@selector(clickShowBigImage:atIndex:)]) {
+        [self.delegate clickShowBigImage:sender atIndex: _indexPath];
+
     }
     
 }

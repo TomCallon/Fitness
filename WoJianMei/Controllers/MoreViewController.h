@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TomCallonViewController.h"
 
-@interface MoreViewController : TomCallonViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
+@interface MoreViewController : TomCallonViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
 
 {
  

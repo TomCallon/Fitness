@@ -8,29 +8,42 @@
 
 #import <UIKit/UIKit.h>
 #import "WeiBoMessageManager.h"
+#import "TomCallonTableViewController.h"
+#import "User.h"
+#import "MyselfCell.h"
 
 
-@class User;
 
+@interface MyselfViewController : TomCallonTableViewController<UITableViewDataSource,UITableViewDelegate,MyselfCellDelegate>
 
-
-@interface MyselfViewController : UIViewController
 {
 
     
-    WeiBoMessageManager *weiBoMessageManager;
-     User *user;
+    WeiBoMessageManager  *weiBoMessageManager;
+    User                                *user;
+    NSString                          *userID;
+
+    NSMutableArray                *statuesArr;
+
     
+    BOOL                  shouldShowIndicator;
+    BOOL                           shouldLoad;
+    BOOL                     shouldLoadAvatar;
     
-    BOOL                shouldShowIndicator;
-    BOOL                shouldLoad;
+    UIImageView                *_headerVImageV;
+    NSMutableDictionary      *imageDictionary;
+
 
 }
 
 
-@property (retain, nonatomic) IBOutlet UIImageView *headerVImageV;
-@property (nonatomic, retain) UIImage *avatarImage;
-@property (nonatomic, retain) User *user;
+@property (retain, nonatomic) IBOutlet      UIImageView *headerVImageV;
+@property (nonatomic, retain) UIImage                     *avatarImage;
+@property (nonatomic, retain) User                               *user;
+@property (nonatomic,retain)  NSString                         *userID;
+@property (nonatomic, retain)   NSMutableArray             *statuesArr;
+@property (nonatomic, retain)   NSMutableDictionary    *imageDictionary;
+
 
 
 @end

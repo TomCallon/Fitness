@@ -164,7 +164,6 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -193,6 +192,4 @@
         [self takePhoto];
     }
 }
-
-
 @end

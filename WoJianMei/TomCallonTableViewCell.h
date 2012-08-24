@@ -10,4 +10,11 @@
 
 @interface TomCallonTableViewCell : UITableViewCell
 
+{
+    NSIndexPath *_indexPath;
+
+}
+@property (nonatomic, retain) NSIndexPath *indexPath;
+
+
 @end

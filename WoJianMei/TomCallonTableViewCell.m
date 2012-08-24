@@ -9,6 +9,8 @@
 #import "TomCallonTableViewCell.h"
 
 @implementation TomCallonTableViewCell
+@synthesize indexPath =_indexPath;
+
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -24,6 +26,14 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)dealloc{
+    
+    
+    [super dealloc];
+    [_indexPath release];
+    
 }
 
 @end

@@ -112,6 +112,7 @@ enum WORKOUT_TIME_TYPE {
                                       
                                       action:nil];
     self.navigationItem.rightBarButtonItem = refreshButton;
+    [refreshButton release];
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
                                      
@@ -124,7 +125,7 @@ enum WORKOUT_TIME_TYPE {
                                      action:@selector(backButtonClick)];
     
     [self.navigationItem setLeftBarButtonItem:cancelButton];
-    
+    [cancelButton release];
 }
 
 -(void)backButtonClick{

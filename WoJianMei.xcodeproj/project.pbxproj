@@ -10,11 +10,12 @@
 		4A11B55015D8BAE400DEC92A /* TwitterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A11B54E15D8BAE300DEC92A /* TwitterVC.m */; };
 		4A11B55115D8BAE400DEC92A /* TwitterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B54F15D8BAE300DEC92A /* TwitterVC.xib */; };
 		4A11B55515D8BBC500DEC92A /* noImage50x118.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55315D8BBC500DEC92A /* noImage50x118.png */; };
-		4A11B55615D8BBC500DEC92A /* noImage50x118@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55415D8BBC500DEC92A /* noImage50x118@2x.png */; };
-		4A11B55815D8BBE600DEC92A /* tabbar_whitebtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55715D8BBE600DEC92A /* tabbar_whitebtn@2x.png */; };
+		4A11B55615D8BBC500DEC92A /* noImage50x1182.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55415D8BBC500DEC92A /* noImage50x1182.png */; };
+		4A11B55815D8BBE600DEC92A /* tabbar_whitebtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55715D8BBE600DEC92A /* tabbar_whitebtn2.png */; };
 		4A11B55B15D8BC6100DEC92A /* input_window.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55915D8BC6100DEC92A /* input_window.png */; };
-		4A11B55C15D8BC6100DEC92A /* input_window@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55A15D8BC6100DEC92A /* input_window@2x.png */; };
+		4A11B55C15D8BC6100DEC92A /* input_window2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55A15D8BC6100DEC92A /* input_window2.png */; };
 		4A11B55E15D8BD9200DEC92A /* statusbar_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A11B55D15D8BD9100DEC92A /* statusbar_background.png */; };
+		4A2B220915E75C0F003633BC /* ShowAlertTextViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 4A79F13D15D00D5300B1E1C3 /* ShowAlertTextViewController.xib */; };
 		4A351F7915E4C79800252573 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4A351EF115E4C79800252573 /* License.txt */; };
 		4A351F7A15E4C79800252573 /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 4A351EF215E4C79800252573 /* README.mdown */; };
 		4A351F7B15E4C79800252573 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4A351EF615E4C79800252573 /* LICENSE.txt */; };
@@ -162,6 +163,10 @@
 		4A81F71915E3725D00201BAA /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A81F71015E3725D00201BAA /* ASINetworkQueue.m */; };
 		4A88A17015C2ECD100C6E4E5 /* PPSegmentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A88A16E15C2EB2100C6E4E5 /* PPSegmentControl.m */; };
 		4A88A17315C2F39000C6E4E5 /* UIImage+UIImageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A88A17215C2F38F00C6E4E5 /* UIImage+UIImageUtil.m */; };
+		4A8FCDED15E5ED4700128601 /* touxiang_40x40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FCDEB15E5ED4700128601 /* touxiang_40x40.png */; };
+		4A8FCDEE15E5ED4700128601 /* touxiang_40x402.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FCDEC15E5ED4700128601 /* touxiang_40x402.png */; };
+		4A8FCDF215E609DA00128601 /* MyselfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FCDF115E609D900128601 /* MyselfCell.m */; };
+		4A8FCDF515E633A500128601 /* TomCallonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FCDF415E633A500128601 /* TomCallonTableViewCell.m */; };
 		4AA6513D15D9242C00C17AA7 /* b_menu_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AA6513315D9242C00C17AA7 /* b_menu_1@2x.png */; };
 		4AA6513E15D9242C00C17AA7 /* b_menu_1s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AA6513415D9242C00C17AA7 /* b_menu_1s@2x.png */; };
 		4AA6513F15D9242C00C17AA7 /* b_menu_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AA6513515D9242C00C17AA7 /* b_menu_2@2x.png */; };
@@ -285,10 +290,10 @@
 		4A11B54E15D8BAE300DEC92A /* TwitterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterVC.m; sourceTree = "<group>"; };
 		4A11B54F15D8BAE300DEC92A /* TwitterVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwitterVC.xib; sourceTree = "<group>"; };
 		4A11B55315D8BBC500DEC92A /* noImage50x118.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImage50x118.png; sourceTree = "<group>"; };
-		4A11B55415D8BBC500DEC92A /* noImage50x118@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noImage50x118@2x.png"; sourceTree = "<group>"; };
-		4A11B55715D8BBE600DEC92A /* tabbar_whitebtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_whitebtn@2x.png"; sourceTree = "<group>"; };
+		4A11B55415D8BBC500DEC92A /* noImage50x1182.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImage50x1182.png; sourceTree = "<group>"; };
+		4A11B55715D8BBE600DEC92A /* tabbar_whitebtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_whitebtn2.png; sourceTree = "<group>"; };
 		4A11B55915D8BC6100DEC92A /* input_window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = input_window.png; sourceTree = "<group>"; };
-		4A11B55A15D8BC6100DEC92A /* input_window@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "input_window@2x.png"; sourceTree = "<group>"; };
+		4A11B55A15D8BC6100DEC92A /* input_window2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = input_window2.png; sourceTree = "<group>"; };
 		4A11B55D15D8BD9100DEC92A /* statusbar_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusbar_background.png; sourceTree = "<group>"; };
 		4A351EF115E4C79800252573 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		4A351EF215E4C79800252573 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
@@ -529,6 +534,12 @@
 		4A88A16E15C2EB2100C6E4E5 /* PPSegmentControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPSegmentControl.m; sourceTree = "<group>"; };
 		4A88A17115C2F38F00C6E4E5 /* UIImage+UIImageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageUtil.h"; sourceTree = "<group>"; };
 		4A88A17215C2F38F00C6E4E5 /* UIImage+UIImageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageUtil.m"; sourceTree = "<group>"; };
+		4A8FCDEB15E5ED4700128601 /* touxiang_40x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang_40x40.png; sourceTree = "<group>"; };
+		4A8FCDEC15E5ED4700128601 /* touxiang_40x402.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang_40x402.png; sourceTree = "<group>"; };
+		4A8FCDF015E609D800128601 /* MyselfCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyselfCell.h; sourceTree = "<group>"; };
+		4A8FCDF115E609D900128601 /* MyselfCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyselfCell.m; sourceTree = "<group>"; };
+		4A8FCDF315E633A400128601 /* TomCallonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TomCallonTableViewCell.h; sourceTree = "<group>"; };
+		4A8FCDF415E633A500128601 /* TomCallonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TomCallonTableViewCell.m; sourceTree = "<group>"; };
 		4AA6513315D9242C00C17AA7 /* b_menu_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b_menu_1@2x.png"; sourceTree = "<group>"; };
 		4AA6513415D9242C00C17AA7 /* b_menu_1s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b_menu_1s@2x.png"; sourceTree = "<group>"; };
 		4AA6513515D9242C00C17AA7 /* b_menu_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b_menu_2@2x.png"; sourceTree = "<group>"; };
@@ -759,10 +770,12 @@
 			children = (
 				4A11B55D15D8BD9100DEC92A /* statusbar_background.png */,
 				4A11B55915D8BC6100DEC92A /* input_window.png */,
-				4A11B55A15D8BC6100DEC92A /* input_window@2x.png */,
-				4A11B55715D8BBE600DEC92A /* tabbar_whitebtn@2x.png */,
+				4A11B55A15D8BC6100DEC92A /* input_window2.png */,
+				4A11B55715D8BBE600DEC92A /* tabbar_whitebtn2.png */,
 				4A11B55315D8BBC500DEC92A /* noImage50x118.png */,
-				4A11B55415D8BBC500DEC92A /* noImage50x118@2x.png */,
+				4A11B55415D8BBC500DEC92A /* noImage50x1182.png */,
+				4A8FCDEB15E5ED4700128601 /* touxiang_40x40.png */,
+				4A8FCDEC15E5ED4700128601 /* touxiang_40x402.png */,
 			);
 			name = "UI -Icons";
 			sourceTree = "<group>";
@@ -1053,16 +1066,18 @@
 				4A81F6BE15E3724100201BAA /* MoreViewController.m */,
 				4A81F6C115E3724100201BAA /* MyselfViewController.h */,
 				4A81F6C215E3724100201BAA /* MyselfViewController.m */,
+				4A8FCDF015E609D800128601 /* MyselfCell.h */,
+				4A8FCDF115E609D900128601 /* MyselfCell.m */,
 				4A81F6C315E3724100201BAA /* NutritionViewController.h */,
 				4A81F6C415E3724100201BAA /* NutritionViewController.m */,
 				4A81F6C915E3724100201BAA /* SettingViewController.h */,
 				4A81F6CA15E3724100201BAA /* SettingViewController.m */,
 				4A81F6CB15E3724100201BAA /* ShowBigImageViewController.h */,
 				4A81F6CC15E3724100201BAA /* ShowBigImageViewController.m */,
-				4A81F6D915E3724100201BAA /* VideoListCell.h */,
-				4A81F6DA15E3724100201BAA /* VideoListCell.m */,
 				4A81F6DB15E3724100201BAA /* VideosListViewController.h */,
 				4A81F6DC15E3724100201BAA /* VideosListViewController.m */,
+				4A81F6D915E3724100201BAA /* VideoListCell.h */,
+				4A81F6DA15E3724100201BAA /* VideoListCell.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1204,6 +1219,8 @@
 				4AB4CBFD15D3647600548562 /* TomCallonViewController.m */,
 				4AA6515315D927BB00C17AA7 /* TomCallonTabBarController.h */,
 				4AA6515415D927BB00C17AA7 /* TomCallonTabBarController.m */,
+				4A8FCDF315E633A400128601 /* TomCallonTableViewCell.h */,
+				4A8FCDF415E633A500128601 /* TomCallonTableViewCell.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1719,10 +1736,10 @@
 				4ABD0E0E15D800B600B08DDA /* ImageBrowser.xib in Resources */,
 				4A11B55115D8BAE400DEC92A /* TwitterVC.xib in Resources */,
 				4A11B55515D8BBC500DEC92A /* noImage50x118.png in Resources */,
-				4A11B55615D8BBC500DEC92A /* noImage50x118@2x.png in Resources */,
-				4A11B55815D8BBE600DEC92A /* tabbar_whitebtn@2x.png in Resources */,
+				4A11B55615D8BBC500DEC92A /* noImage50x1182.png in Resources */,
+				4A11B55815D8BBE600DEC92A /* tabbar_whitebtn2.png in Resources */,
 				4A11B55B15D8BC6100DEC92A /* input_window.png in Resources */,
-				4A11B55C15D8BC6100DEC92A /* input_window@2x.png in Resources */,
+				4A11B55C15D8BC6100DEC92A /* input_window2.png in Resources */,
 				4A11B55E15D8BD9200DEC92A /* statusbar_background.png in Resources */,
 				4AA6513D15D9242C00C17AA7 /* b_menu_1@2x.png in Resources */,
 				4AA6513E15D9242C00C17AA7 /* b_menu_1s@2x.png in Resources */,
@@ -1764,6 +1781,8 @@
 				4A351F7C15E4C79800252573 /* README.txt in Resources */,
 				4A351F8715E4C79800252573 /* LogicTests-Info.plist in Resources */,
 				4A351FBA15E4C79800252573 /* TapkuLibrary.bundle in Resources */,
+				4A8FCDED15E5ED4700128601 /* touxiang_40x40.png in Resources */,
+				4A8FCDEE15E5ED4700128601 /* touxiang_40x402.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1774,6 +1793,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A2B220915E75C0F003633BC /* ShowAlertTextViewController.xib in Sources */,
 				4A7CF98E15D74EA400206B14 /* MBProgressHUD.m in Sources */,
 				4AB4CC1515D374BA00548562 /* UIButtonExt.m in Sources */,
 				4AB4CBEA15D360C100548562 /* EGORefreshTableHeaderView.m in Sources */,
@@ -1917,6 +1937,8 @@
 				4A351FB715E4C79800252573 /* UIScrollview+TKCategory.m in Sources */,
 				4A351FB815E4C79800252573 /* UIToolbar+TKCategory.m in Sources */,
 				4A351FB915E4C79800252573 /* UIView+TKCategory.m in Sources */,
+				4A8FCDF215E609DA00128601 /* MyselfCell.m in Sources */,
+				4A8FCDF515E633A500128601 /* TomCallonTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

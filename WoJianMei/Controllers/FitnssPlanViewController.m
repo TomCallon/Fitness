@@ -65,7 +65,8 @@
 	// Do any additional setup after loading the view
     [self  initNativeCal];
     
-    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bottom_bg.png"] forBarMetrics:UIBarMetricsDefault];
+
     
     [self.view addSubview:kal.view];
 }

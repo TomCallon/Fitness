@@ -29,6 +29,7 @@
 #import "WeiBoMessageManager.h"
 #import "TwitterVC.h"
 #import "ZJTGloble.h"
+#import "ZJTHelpler.h"
 //#import "SHKActivityIndicator.h"
 
 
@@ -88,48 +89,14 @@
 
 
 #pragma mark -
-#pragma mark -in app purchasing method
-
-- (void)dismissHUD:(id)arg {
-    
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    self.hud = nil;
-    
-}
-
-- (void)productsLoaded:(NSNotification *)notification {
-    
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    
-    self.tableView.hidden = FALSE;
-    [self.tableView reloadData];
-    
-}
-
-- (void)timeout:(id)arg {
-    
-    _hud.labelText = @"Timeout!";
-    _hud.detailsLabelText = @"Please try again later.";
-    _hud.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] autorelease];
-	_hud.mode = MBProgressHUDModeCustomView;
-    [self performSelector:@selector(dismissHUD:) withObject:nil afterDelay:3.0];
-    
-}
-
-- (void)updateInterfaceWithReachability: (Reachability*) curReach {
-    
-    NSLog(@"%@",[curReach description]);
-}
-
-
-#pragma mark -
 #pragma mark -Send WeiBlog
 
 -(void)sendWeiBlog{
-    NSLog(@"hey you can write WeiBlog now");
     
-    
+    TwitterVC *tv = [[TwitterVC alloc]initWithNibName:@"TwitterVC" bundle:nil];    
+    [self.navigationController pushViewController:tv animated:YES];
+    [tv release];
+
 }
 
 -(void)initWeiBlogSettings{
@@ -147,31 +114,65 @@
     }
     else
     {
+        weiBoMessageManager =[WeiBoMessageManager getInstance];
         [weiBoMessageManager getUserID];
-        [weiBoMessageManager getHomeLine:-1 maxID:-1 count:-1 page:-1 baseApp:-1 feature:-1];
-//        [[SHKActivityIndicator currentIndicator] displayActivity:@"正在载入..." inView:self.view];
         [[ZJTStatusBarAlertWindow getInstance] showWithString:@"正在载入，请稍后..."];
     }
-    [defaultNotifCenter addObserver:self selector:@selector(didGetUserID:)      name:MMSinaGotUserID            object:nil];
-    [defaultNotifCenter addObserver:self selector:@selector(didGetHomeLine:)    name:MMSinaGotHomeLine          object:nil];
-    [defaultNotifCenter addObserver:self selector:@selector(didGetUserInfo:)    name:MMSinaGotUserInfo          object:nil];
-    [defaultNotifCenter addObserver:self selector:@selector(relogin)            name:NeedToReLogin              object:nil];
-    [defaultNotifCenter addObserver:self selector:@selector(didGetUnreadCount:)                   name:MMSinaGotUnreadCount object:nil];
     
-    //////获得地址
-     [defaultNotifCenter addObserver:self selector:@selector(didGetGeocodeGeoToAddress::)                   name:MMSinaGotGeocodeGeoToAddress object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetUserID:)      name:MMSinaGotUserID            object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetUserInfo:)    name:MMSinaGotUserInfo          object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector
+        (relogin)            name:NeedToReLogin              object:nil];
+    
+    
 }
 
 -(void)didGetUserID:(NSNotification*)sender
 {
-    self.userID = sender.object;
+     self.userID = sender.object;
     [[NSUserDefaults standardUserDefaults] setObject:userID forKey:USER_STORE_USER_ID];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
     [weiBoMessageManager getUserInfoWithUserID:[userID longLongValue]];
-
+    
 }
 
+-(void)didGetUserInfo:(NSNotification*)sender
+{
+     User *user = sender.object;
+    [ZJTHelpler getInstance].user = user;
+    [[NSUserDefaults standardUserDefaults] setObject:user.screenName forKey:USER_STORE_USER_NAME];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void)loginSucceed
+{
+    shouldLoad = YES;
+}
+
+
+-(void)relogin
+{
+    shouldLoad = YES;
+    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
+    webV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webV animated:NO];
+    [webV release];
+}
+
+//得到图片
+-(void)getAvatar:(NSNotification*)sender
+{
+    
+    
+}
+
+
+-(void)mmRequestFailed:(id)sender
+{
+    [[ZJTStatusBarAlertWindow getInstance] hide];
+}
 
 
 
@@ -181,219 +182,34 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-            
-
-//    UITabBarItem *tab1 = [[UITabBarItem alloc] initWithTitle:@"视频"
-//                                                       image:[UIImage imageNamed:@"b_menu_1.png"] tag:4];
-//    [self setTabBarItem:tab1];
-//    [tab1 setFinishedSelectedImage:[UIImage imageNamed:@"b_menu_1s.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"b_menu_1.png"]];
     
 
-   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bottom_bg.png"] forBarMetrics:UIBarMetricsDefault];
 
-    
+   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bottom_bg.png"] forBarMetrics:UIBarMetricsDefault]; 
     
     ////init the follow count badge view
     [self myFollowCountBadgeViewInit];
         
-    
     UIBarButtonItem *retwitterBtn = [[UIBarButtonItem alloc]initWithTitle:@"发微博" style:UIBarButtonItemStylePlain target:self action:@selector(sendWeiBlog)];
-       
-    
     self.navigationItem.rightBarButtonItem = retwitterBtn;
-       
     [retwitterBtn release];
+
     
     [self  initWeiBlogSettings];
-    
-    
+
     [defaultNotifCenter addObserver:self selector:@selector(getAvatar:)         name:HHNetDataCacheNotification object:nil];
-    [defaultNotifCenter addObserver:self selector:@selector(mmRequestFailed:)   name:MMSinaRequestFailed object:nil];
-    [defaultNotifCenter addObserver:self selector:@selector(loginSucceed)       name:DID_GET_TOKEN_IN_WEB_VIEW object:nil];
+    [defaultNotifCenter addObserver:self selector:@selector
+     (mmRequestFailed:)   name:MMSinaRequestFailed object:nil];
+    [defaultNotifCenter addObserver:self selector:@selector
+     (loginSucceed)       name:DID_GET_TOKEN_IN_WEB_VIEW object:nil];
 
     [[ZJTStatusBarAlertWindow getInstance] hide];
 
-        
-    
-//    Upper Area
-//    Trapezius ( neck ) >
-//    Deltoid ( shoulders ) >
-//    Biceps ( arms ) >
-//    Triceps ( arms ) >
-//    Forearm ( wrists ) >
-
-    //////Upper Area  
-    WorkOut *workOut =[[WorkOut alloc]init];
-    workOut.workOutTimeLength = @"40minutes";
-    workOut.repeatTimes = @"7 -12 次";
-    workOut.sets = @"6-7组";
-    Video *video1 = [[Video alloc]initWithId:@"1"
-                                          title:@"Neck_exercises_s" 
-                                      timeLeght:@"40minutes" 
-                                          image:[UIImage imageNamed:@"neck_exercises_s.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    Video *video2 = [[Video alloc]initWithId:@"2" 
-                                               title:@"Shoulder-Exercises" 
-                                      timeLeght:@"40minutes" 
-                                          image:[UIImage imageNamed:@"Shoulder-Exercises.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    
-    Video *video3 = [[Video alloc]initWithId:@"3" 
-                                       title:@"Biceps-Exercises" 
-                                      timeLeght:@"40minutes" 
-                                          image:[UIImage imageNamed:@"Biceps-Exercises.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    Video *video4 = [[Video alloc]initWithId:@"4" 
-                                       title:@"Triceps-Exercises" 
-                                      timeLeght:@"40minutes" 
-                                          image:[UIImage imageNamed:@"Triceps-Exercises.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    Video *video5 = [[Video alloc]initWithId:@"5" 
-                                       title:@"Forearm-exercises" 
-                                      timeLeght:@"30minutes" 
-                                          image:[UIImage imageNamed:@"forearm-exercises.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    //////Middle  Area
-    //    Pectoral ( chest ) >
-    //    Abs ( abdomen ) >
-    //    Oblique Abs ( lateral abdomen ) >
-    //    Dorsal ( back ) >
-    //    Lumbar ( lower back ) >
-
-
-    
-    Video *video6 = [[Video alloc]initWithId:@"6" 
-                                       title:@"Chest-Exercises_s" 
-                                      timeLeght:@"40minutes" 
-                                          image:[UIImage imageNamed:@"Chest-Exercises_s.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    Video *video7 = [[Video alloc]initWithId:@"7" 
-                                       title:@"Abs-Exercises_s" 
-                                      timeLeght:@"20minutes" 
-                                          image:[UIImage imageNamed:@"Abs-Exercises_s.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    Video *video8 = [[Video alloc]initWithId:@"8" 
-                                       title:@"Oblique-abdominal-exercises" 
-                                      timeLeght:@"30minutes" 
-                                          image:[UIImage imageNamed:@"Oblique-abdominal-exercises.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    Video *video9 = [[Video alloc]initWithId:@"9" 
-                                       title:@"ack-Exercises" 
-                                      timeLeght:@"40minutes" 
-                                          image:[UIImage imageNamed:@"Back-Exercises.jpg"]
-                                       isFollow:NO 
-                                        workOut:workOut]; 
-    Video *video10 = [[Video alloc]initWithId:@"10" 
-                                        title:@"Lower-Back-Exercises" 
-                                      timeLeght:@"50minutes" 
-                                          image:[UIImage imageNamed:@"Lower-Back-Exercises.jpg"]
-                                        isFollow:NO 
-                                         workOut:workOut ]; 
-
-                      
-                      
-    //    Lower Area
-    //    Gluteus ( buttocks ) >
-    //    Adductor ( internal thigh ) >
-    //    Quadriceps ( legs ) >
-    //    Femoral ( hamstring ) >
-    //    Calf ( ankles )
-                
-                      
-    Video *video11= [[Video alloc]initWithId:@"11" 
-                                       title:@"buttocks-exercises" 
-                                      timeLeght:@"12minutes" 
-                                          image:[UIImage imageNamed:@"buttocks-exercises.jpg"]
-                                          isFollow:NO 
-                                        workOut:workOut ]; 
-    Video *video12 = [[Video alloc]initWithId:@"12" 
-                                        title:@"adductor-exercises" 
-                                      timeLeght:@"34minutes" 
-                                          image:[UIImage imageNamed:@"adductor-exercises.jpg"]
-                                        isFollow:NO 
-                                        workOut:workOut ]; 
-    Video *video13 = [[Video alloc]initWithId:@"13" 
-                                        title:@"Quadriceps-exercises" 
-                                      timeLeght:@"45minutes" 
-                                          image:[UIImage imageNamed:@"quadriceps-exercises.jpg"]
-                                        isFollow:NO 
-                                        workOut:workOut ]; 
-    Video *video14 = [[Video alloc]initWithId:@"14" 
-                                        title:@"Hamstring-exercises" 
-                                      timeLeght:@"40minutes" 
-                                          image:[UIImage imageNamed:@"hamstring-exercises.jpg"]
-                                        isFollow:NO 
-                                        workOut:workOut ]; 
-    Video *video15 = [[Video alloc]initWithId:@"15" 
-                                        title:@"Calf-exercises" 
-                                      timeLeght:@"40minutes" 
-                                          image:[UIImage imageNamed:@"calf-exercises.jpg"]
-                                        isFollow:NO 
-                                        workOut:workOut ]; 
-    
-    [workOut release];
-
     
     
-    VideoManager *mangager =[VideoManager defaultManager];
-    [mangager addVideo:video1];
-    [mangager addVideo:video2];
-    [mangager addVideo:video3];
-    [mangager addVideo:video4];
-    [mangager addVideo:video5];
-    [mangager addVideo:video6];
-    [mangager addVideo:video7];
-    [mangager addVideo:video8];
-    [mangager addVideo:video9];
-    [mangager addVideo:video10];
-    [mangager addVideo:video11];
-    [mangager addVideo:video12];
-    [mangager addVideo:video13];
-    [mangager addVideo:video14];
-    [mangager addVideo:video15];
-
-    [video1 release];
-    [video2 release];
-    [video3 release];
-    [video4 release];
-    [video5 release];
-    [video6 release];
-    [video7 release];
-    [video8 release];
-    [video9 release];
-    [video10 release];
-    [video11 release];
-    [video12 release];
-    [video13 release];
-    [video14 release];
-    [video15 release];
-      
     
-    for (int i =0; i <[mangager.followVideoList  count]; i++) {
-        ///get all the follow videos
-        Video *video =[[mangager getAllFollowVideo] objectAtIndex:i];
-        if (video.isFollow) {
-            Video *notFollowVideo =[mangager getVideoById:video.videoId];
-            notFollowVideo.isFollow =[NSNumber  numberWithBool:YES];
-            NSLog(@"%d",[video.isFollow intValue]);
-            NSLog(@"%d",[video.isFollow intValue]);
-        }
-    }
-
-      
+    [self initWorkOutDatas];
     [self clickButtons:self.selectedButton];
-    
-    
-    
-    
 }
 
 - (void)viewDidUnload
@@ -401,20 +217,34 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     
-    [defaultNotifCenter removeObserver:self name:MMSinaGotUserID            object:nil];
-    [defaultNotifCenter removeObserver:self name:MMSinaGotHomeLine          object:nil];
-    [defaultNotifCenter removeObserver:self name:MMSinaGotUserInfo          object:nil];
-    [defaultNotifCenter removeObserver:self name:NeedToReLogin              object:nil];
-    [defaultNotifCenter removeObserver:self name:MMSinaGotUnreadCount       object:nil];
-/////////
-    [defaultNotifCenter removeObserver:self name:MMSinaGotGeocodeGeoToAddress object:nil];
+    
+    //////Sina weibo 
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MMSinaGotUserID            object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MMSinaGotUserInfo          object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NeedToReLogin              object:nil];
+    
 
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MMSinaRequestFailed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:DID_GET_TOKEN_IN_WEB_VIEW object:nil];
+
+    
+    
+    //////in app purchasing
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductsLoadedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self  name:kProductPurchasedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self   name:kProductPurchaseFailedNotification object: nil];
+    
+    
+    
     self.hud = nil;
     self.selectedButton = nil;
     self.myFollowButton =nil;
     self.tableView =nil;
     self.showBigImageViewController = nil;
 }
+
+
+
 
 -(void)viewWillAppear:(BOOL)animated{
     //    self.tableView.hidden = TRUE;
@@ -462,10 +292,6 @@
     [self showTabBar];
 }
 
-
-
-
-
 #pragma mark -
 #pragma mark - UITableViewDelegate
 
@@ -477,7 +303,8 @@
 }
 
 // Customize the number of rows in the table view.
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectio
+{
     
     return [_dataList count];
 }
@@ -486,15 +313,16 @@
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString *CellIdentifier = [VideoListCell getCellIdentifier];
-    VideoListCell *cell = (VideoListCell*)[self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+   VideoListCell *cell = (VideoListCell*)[self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    
     if (!cell) {
-        
-        cell = [[[VideoListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[VideoListCell getCellIdentifier]] autorelease];
+     cell  = [[[VideoListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+;
     }
     
-    
-    
-    cell.VideoListCellDelegate = self;
+
+    cell.delegate = self;
     cell.indexPath = indexPath;
     Video *video  = [_dataList objectAtIndex:indexPath.row];
     if (video) {
@@ -710,7 +538,6 @@
 //
 //    }
     
-    NSLog( @"Version 4.0 or earlier" );
     TwitterVC *tv = [[TwitterVC alloc]initWithNibName:@"TwitterVC" bundle:nil];
     tv.demoWorkOutImage = [video image];
     
@@ -747,8 +574,6 @@
             if ([SKPaymentQueue canMakePayments]) {
                 // Display a store to the user.
                 
-                
-                
             } else {
                 // Warn the user that purchases are disabled.
                 NSLog(@"Your store kit is not avaiable  ");
@@ -764,15 +589,13 @@
 
 
 
--(void)clickShowBigImage:(id)sender{
-      
-    UIButton *button = (UIButton *)sender;
-    UIImage *image = (UIImage *) button.imageView.image;
+-(void)clickShowBigImage:(id)sender atIndex:(NSIndexPath *)indexPath{
+          
+    Video *video =[_dataList objectAtIndex:indexPath.row];
+    UIImage *image = video.image;
     self.showBigImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ShowBigImage"];
     self.showBigImageViewController.image = image;
-    NSLog(@"WHAT THE THE COUNT OF THE IMAGES %d",[image retainCount]);
-    
-    
+        
     //  双击显示大图片
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isFullScreen"];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDetectDoubleTap:)];
@@ -830,10 +653,6 @@
 
 #pragma mark -
 #pragma mark BodyButtons Methods
-
-
-
-
 - (IBAction)clickButtons:(id)sender{
     UIButton *button = (UIButton *)sender;
     button.selected = YES;
@@ -929,5 +748,218 @@
         return YES;
     }
 }
+
+-(void)initWorkOutDatas{
+    
+    //    Upper Area
+    //    Trapezius ( neck ) >
+    //    Deltoid ( shoulders ) >
+    //    Biceps ( arms ) >
+    //    Triceps ( arms ) >
+    //    Forearm ( wrists ) >
+    
+    //////Upper Area
+    WorkOut *workOut =[[WorkOut alloc]init];
+    workOut.workOutTimeLength = @"40minutes";
+    workOut.repeatTimes = @"7 -12 次";
+    workOut.sets = @"6-7组";
+    Video *video1 = [[Video alloc]initWithId:@"1"
+                                       title:@"Neck_exercises_s"
+                                   timeLeght:@"40minutes"
+                                       image:[UIImage imageNamed:@"neck_exercises_s.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    Video *video2 = [[Video alloc]initWithId:@"2"
+                                       title:@"Shoulder-Exercises"
+                                   timeLeght:@"40minutes"
+                                       image:[UIImage imageNamed:@"Shoulder-Exercises.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    
+    Video *video3 = [[Video alloc]initWithId:@"3"
+                                       title:@"Biceps-Exercises"
+                                   timeLeght:@"40minutes"
+                                       image:[UIImage imageNamed:@"Biceps-Exercises.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    Video *video4 = [[Video alloc]initWithId:@"4"
+                                       title:@"Triceps-Exercises"
+                                   timeLeght:@"40minutes"
+                                       image:[UIImage imageNamed:@"Triceps-Exercises.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    Video *video5 = [[Video alloc]initWithId:@"5"
+                                       title:@"Forearm-exercises"
+                                   timeLeght:@"30minutes"
+                                       image:[UIImage imageNamed:@"forearm-exercises.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    //////Middle  Area
+    //    Pectoral ( chest ) >
+    //    Abs ( abdomen ) >
+    //    Oblique Abs ( lateral abdomen ) >
+    //    Dorsal ( back ) >
+    //    Lumbar ( lower back ) >
+    
+    
+    
+    Video *video6 = [[Video alloc]initWithId:@"6"
+                                       title:@"Chest-Exercises_s"
+                                   timeLeght:@"40minutes"
+                                       image:[UIImage imageNamed:@"Chest-Exercises_s.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    Video *video7 = [[Video alloc]initWithId:@"7"
+                                       title:@"Abs-Exercises_s"
+                                   timeLeght:@"20minutes"
+                                       image:[UIImage imageNamed:@"Abs-Exercises_s.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    Video *video8 = [[Video alloc]initWithId:@"8"
+                                       title:@"Oblique-abdominal-exercises"
+                                   timeLeght:@"30minutes"
+                                       image:[UIImage imageNamed:@"Oblique-abdominal-exercises.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    Video *video9 = [[Video alloc]initWithId:@"9"
+                                       title:@"ack-Exercises"
+                                   timeLeght:@"40minutes"
+                                       image:[UIImage imageNamed:@"Back-Exercises.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut];
+    Video *video10 = [[Video alloc]initWithId:@"10"
+                                        title:@"Lower-Back-Exercises"
+                                    timeLeght:@"50minutes"
+                                        image:[UIImage imageNamed:@"Lower-Back-Exercises.jpg"]
+                                     isFollow:NO
+                                      workOut:workOut ];
+    
+    
+    
+    //    Lower Area
+    //    Gluteus ( buttocks ) >
+    //    Adductor ( internal thigh ) >
+    //    Quadriceps ( legs ) >
+    //    Femoral ( hamstring ) >
+    //    Calf ( ankles )
+    
+    
+    Video *video11= [[Video alloc]initWithId:@"11"
+                                       title:@"buttocks-exercises"
+                                   timeLeght:@"12minutes"
+                                       image:[UIImage imageNamed:@"buttocks-exercises.jpg"]
+                                    isFollow:NO
+                                     workOut:workOut ];
+    Video *video12 = [[Video alloc]initWithId:@"12"
+                                        title:@"adductor-exercises"
+                                    timeLeght:@"34minutes"
+                                        image:[UIImage imageNamed:@"adductor-exercises.jpg"]
+                                     isFollow:NO
+                                      workOut:workOut ];
+    Video *video13 = [[Video alloc]initWithId:@"13"
+                                        title:@"Quadriceps-exercises"
+                                    timeLeght:@"45minutes"
+                                        image:[UIImage imageNamed:@"quadriceps-exercises.jpg"]
+                                     isFollow:NO
+                                      workOut:workOut ];
+    Video *video14 = [[Video alloc]initWithId:@"14"
+                                        title:@"Hamstring-exercises"
+                                    timeLeght:@"40minutes"
+                                        image:[UIImage imageNamed:@"hamstring-exercises.jpg"]
+                                     isFollow:NO
+                                      workOut:workOut ];
+    Video *video15 = [[Video alloc]initWithId:@"15"
+                                        title:@"Calf-exercises"
+                                    timeLeght:@"40minutes"
+                                        image:[UIImage imageNamed:@"calf-exercises.jpg"]
+                                     isFollow:NO
+                                      workOut:workOut ];
+    
+    [workOut release];
+    
+    
+    
+    VideoManager *mangager =[VideoManager defaultManager];
+    [mangager addVideo:video1];
+    [mangager addVideo:video2];
+    [mangager addVideo:video3];
+    [mangager addVideo:video4];
+    [mangager addVideo:video5];
+    [mangager addVideo:video6];
+    [mangager addVideo:video7];
+    [mangager addVideo:video8];
+    [mangager addVideo:video9];
+    [mangager addVideo:video10];
+    [mangager addVideo:video11];
+    [mangager addVideo:video12];
+    [mangager addVideo:video13];
+    [mangager addVideo:video14];
+    [mangager addVideo:video15];
+    
+    [video1 release];
+    [video2 release];
+    [video3 release];
+    [video4 release];
+    [video5 release];
+    [video6 release];
+    [video7 release];
+    [video8 release];
+    [video9 release];
+    [video10 release];
+    [video11 release];
+    [video12 release];
+    [video13 release];
+    [video14 release];
+    [video15 release];
+    
+    
+    for (int i =0; i <[mangager.followVideoList  count]; i++) {
+        ///get all the follow videos
+        Video *video =[[mangager getAllFollowVideo] objectAtIndex:i];
+        if (video.isFollow) {
+            Video *notFollowVideo =[mangager getVideoById:video.videoId];
+            notFollowVideo.isFollow =[NSNumber  numberWithBool:YES];
+            NSLog(@"%d",[video.isFollow intValue]);
+            NSLog(@"%d",[video.isFollow intValue]);
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark -in app purchasing method
+- (void)dismissHUD:(id)arg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    self.hud = nil;
+    
+}
+
+- (void)productsLoaded:(NSNotification *)notification {
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    self.tableView.hidden = FALSE;
+    [self.tableView reloadData];
+    
+}
+
+- (void)timeout:(id)arg {
+    
+    _hud.labelText = @"Timeout!";
+    _hud.detailsLabelText = @"Please try again later.";
+    _hud.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] autorelease];
+	_hud.mode = MBProgressHUDModeCustomView;
+    [self performSelector:@selector(dismissHUD:) withObject:nil afterDelay:3.0];
+    
+}
+
+- (void)updateInterfaceWithReachability: (Reachability*) curReach {
+    
+    NSLog(@"%@",[curReach description]);
+}
+
+
+
 
 @end

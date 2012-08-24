@@ -64,7 +64,6 @@
     
     
     MyselfViewController *myselfViewController = (MyselfViewController *)[storyboard instantiateViewControllerWithIdentifier:@"MyselfViewController"];
-    
     [UIUtils addViewControllerFromStoryBoard:myselfViewController
                                    viewTitle:@"我健美"
                                    viewImage:@"b_menu_3.png"
@@ -76,12 +75,10 @@
     [UIUtils addViewControllerFromStoryBoard:nutritionViewController
                      viewTitle:@"健身营养"
                      viewImage:@"b_menu_2.png"
-              hasNavController:NO
+              hasNavController:YES
                viewControllers:controllers];
     
     
- 	
-	
     FitnssPlanViewController *fitnssPlanViewController =(FitnssPlanViewController *)[storyboard instantiateViewControllerWithIdentifier:@"FitnssPlanViewController"];
 	[UIUtils addViewControllerFromStoryBoard:fitnssPlanViewController
 					 viewTitle:@"健身计划"
@@ -106,7 +103,7 @@
                                                   nil]];
     
     self.tabBarController.viewControllers = controllers;
-    self.tabBarController.selectedIndex = TAB_REALTIME_SCORE ;
+    self.tabBarController.selectedIndex = TAB_REALTIME_SCORE;
     
    [controllers release];
     
@@ -117,6 +114,7 @@
 
 - (void)customizeInterface
 {
+    
 //    UIImage* tabBarBackground = [UIImage imageNamed:@"tabbar.png"];
 //    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
 //    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selection-tab.png"]];
@@ -130,8 +128,8 @@
     // Override point for customization after application launch.
     
     [[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppFitnessIAPHelper sharedHelper]];
-    
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
    [self customizeInterface];
    [self initTabViewControllers];
    [self.window setRootViewController:self.tabBarController];

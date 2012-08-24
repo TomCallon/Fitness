@@ -9,6 +9,7 @@
 #import "MoreViewController.h"
 #import "AboutViewController.h"
 #import <Social/Social.h>
+#import "OAuthWebView.h"
 
 
 
@@ -45,6 +46,8 @@ typedef enum {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.    
     [self optionListInit];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bottom_bg.png"] forBarMetrics:UIBarMetricsDefault];
+
 }
 
 - (void)viewDidUnload
@@ -113,9 +116,6 @@ typedef enum {
         case COMPLETE_SCORE:
             image = [UIImage imageNamed:@"szicon1.png"];
             break;
-//        case ASK_YOUR_FRIENDS_TO_COME:
-//            image = [UIImage imageNamed:@"szicon9.png"];
-//            break;
         case WEEK_SCHEDUAL:
             image = [UIImage imageNamed:@"szicon2.png"];
             break;
@@ -170,11 +170,12 @@ typedef enum {
     NSUInteger row = [indexPath row];
     switch (row) {
         case COMPLETE_SCORE:
-//            [ScheduleController showFinishedMatchWithSuperController:self];
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"确定要更换账号吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"更换", nil];
+            [alert show];
+            [alert release];
+        }
             break;
-//        case ASK_YOUR_FRIENDS_TO_COME:
-////            [];
-//            break;
         case WEEK_SCHEDUAL:
 //            [ScheduleController showScheduleWithSuperController:self];
             break;
@@ -223,6 +224,14 @@ typedef enum {
     
     
     [self performSegueWithIdentifier:@"AboutViewControllerSegue" sender:self];
+}
+
+-(void)logout
+{
+    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
+    webV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webV animated:YES];
+    [webV release];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -319,6 +328,16 @@ typedef enum {
 //    } else {
 //        NSLog(@"UnAvailable\\");
    }
+
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+//        [self logout];
+    }
+}
+
 
 
 @end
