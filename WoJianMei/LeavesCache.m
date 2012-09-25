@@ -97,7 +97,12 @@
 
 #pragma mark accessors
 
-- (void) setPageSize:(CGSize)value {
+//- (void)setPageSize:(CGSize)value {
+
+
+-(void)setPageSize:(CGSize)value
+{
+
 	pageSize = value;
 	[self flush];
 }

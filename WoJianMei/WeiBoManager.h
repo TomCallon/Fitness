@@ -10,4 +10,8 @@
 
 @interface WeiBoManager : NSObject
 
+
+
++(WeiBoManager *)defaultManager;
+extern  WeiBoManager *GlobalGetVideoManager();
 @end

@@ -19,11 +19,13 @@
 {
 
     
+    NSNotificationCenter *defaultNotifCenter;    
     WeiBoMessageManager  *weiBoMessageManager;
-    User                                *user;
-    NSString                          *userID;
+    User                                *_user;
+    NSString                          *_userID;
 
     NSMutableArray                *statuesArr;
+    NSMutableDictionary       *imageDictionary;
 
     
     BOOL                  shouldShowIndicator;
@@ -31,19 +33,28 @@
     BOOL                     shouldLoadAvatar;
     
     UIImageView                *_headerVImageV;
-    NSMutableDictionary      *imageDictionary;
+    UIImageView                *_footerVImageV;
+    UIImage                     *_avatarImage;
+    
+    UIView                      *myHeaderView;
+	UIView                      *myFooterView;
 
 
 }
 
 
-@property (retain, nonatomic) IBOutlet      UIImageView *headerVImageV;
+@property (retain, nonatomic) UIImageView *headerVImageV;
+@property (retain, nonatomic) UIImageView *footerVImageV;
+
 @property (nonatomic, retain) UIImage                     *avatarImage;
 @property (nonatomic, retain) User                               *user;
 @property (nonatomic,retain)  NSString                         *userID;
 @property (nonatomic, retain)   NSMutableArray             *statuesArr;
 @property (nonatomic, retain)   NSMutableDictionary    *imageDictionary;
 
+
+@property (nonatomic, retain) IBOutlet UIView *myHeaderView;
+@property (nonatomic, retain) IBOutlet UIView *myFooterView;
 
 
 @end

@@ -15,11 +15,10 @@
 #import "Link.h"
 
 
-#import "MusicScoreViewController.h"
-#import "MScorePlayViewController.h"
+
 
 @implementation BookController
-@synthesize catalog;
+@synthesize catalogButton;
 @synthesize bookself;
 @synthesize catalogView;
 
@@ -41,17 +40,6 @@
 
 #define kDuration 0.7  // 立体翻页动画持续时间(秒)
  
-
- 
-
-
--(void)showMScoreViewController{
-    
-
-   MScorePlayViewController *mScorePlayViewController = [[MScorePlayViewController alloc]initWithLink:2];
-    [self.navigationController presentModalViewController:mScorePlayViewController animated:YES];
-    
-}
 
 
 
@@ -106,7 +94,7 @@
 - (void)initViews
 {
     self.bookself = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.bookself setTitle:@"书柜" forState:UIControlStateNormal];
+    [self.bookself setTitle:@"返回" forState:UIControlStateNormal];
     [self.bookself setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [self.bookself setFrame:BOOKSELF_FRAME];
     [self.bookself.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
@@ -114,11 +102,11 @@
     [self.bookself addTarget:self action:@selector(clickBookself:) forControlEvents:UIControlEventTouchUpInside];
     
     //init catalog button
-    self.catalog = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.catalog setFrame:CATALOG_FRAME];
-    [self.catalog setImage:[ImageManager catalogButton] forState:UIControlStateNormal];
-    [self.catalog setImage:[ImageManager catalogButtonPress] forState:UIControlStateNormal];
-    [self.catalog addTarget:self action:@selector(clickCatalog:) forControlEvents:UIControlEventTouchUpInside];
+    self.catalogButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.catalogButton setFrame:CATALOG_FRAME];
+    [self.catalogButton setImage:[ImageManager catalogButton] forState:UIControlStateNormal];
+    [self.catalogButton setImage:[ImageManager catalogButtonPress] forState:UIControlStateNormal];
+    [self.catalogButton addTarget:self action:@selector(clickCatalog:) forControlEvents:UIControlEventTouchUpInside];
         
     
     //init catalog table view.
@@ -150,7 +138,7 @@
     [leavesView setPreferredTargetWidth:PERFORM_WIDTH];
     [self initViews];
     [self.view addSubview:self.bookself];
-    [self.view addSubview:catalog];
+    [self.view addSubview:catalogButton];
     [self.view addSubview:self.catalogView];
     [self.catalogView setHidden:YES];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -159,26 +147,10 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    [self hideTabBar];
 
 }
 
 
-- (void)hideTabBar {
-    UITabBar *tabBar = self.tabBarController.tabBar;
-    UIView *parent = tabBar.superview; // UILayoutContainerView
-    UIView *content = [parent.subviews objectAtIndex:0];  // UITransitionView
-    UIView *window = parent.superview;
-    
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         CGRect tabFrame = tabBar.frame;
-                         tabFrame.origin.y = CGRectGetMaxY(window.bounds);
-                         tabBar.frame = tabFrame;
-                         content.frame = window.bounds;
-                     }];
-    
-}
 
 
 #pragma mark - button animation.
@@ -190,7 +162,7 @@
 {
     if ([animationID isEqualToString:HIDE_ANIMATION_ID]) {
         NSLog(@"animationDidStop");
-        self.bookself.hidden = self.catalog.hidden = self.catalogView.hidden = YES;        
+        self.bookself.hidden = self.catalogButton.hidden = self.catalogView.hidden = YES;        
     }
 }
 
@@ -203,11 +175,11 @@
             [UIView setAnimationDelegate:self];
             [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
             [self.bookself setAlpha:0];
-            self.catalog.alpha = 0;
+            self.catalogButton.alpha = 0;
             self.catalogView.alpha = 0;
             [UIView commitAnimations];            
         }else{
-            self.bookself.hidden = self.catalog.hidden = self.catalogView.hidden = YES;        
+            self.bookself.hidden = self.catalogButton.hidden = self.catalogView.hidden = YES;        
         }
     }
 }
@@ -216,15 +188,15 @@
 {
     if (self.bookself.hidden) {
         [self.view bringSubviewToFront:self.bookself];
-        [self.view bringSubviewToFront:self.catalog];        
-            self.bookself.hidden = self.catalog.hidden = NO;         
+        [self.view bringSubviewToFront:self.catalogButton];        
+            self.bookself.hidden = self.catalogButton.hidden = NO;
         if (animated) {
             self.bookself.alpha = 0;
-            self.catalog.alpha = 0;
+            self.catalogButton.alpha = 0;
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:ANIMATION_DURATION];
             [self.bookself setAlpha:1];
-            self.catalog.alpha = 1;
+            self.catalogButton.alpha = 1;
             [UIView commitAnimations];
         }
     }
@@ -253,10 +225,10 @@
 
 - (void) leavesView:(LeavesView *)leavesView didClickLink:(Link *)link atPageIndex:(NSUInteger)pageIndex
 {
-    
-    MScorePlayViewController *mc = [[MScorePlayViewController alloc] initWithLink:pageIndex + 2];
-    [self.navigationController pushViewController:mc animated:YES];
-    [mc release];
+//    
+//    MScorePlayViewController *mc = [[MScorePlayViewController alloc] initWithLink:pageIndex + 2];
+//    [self.navigationController pushViewController:mc animated:YES];
+//    [mc release];
     
     
     // TODO show the music playing controller
@@ -270,7 +242,6 @@
 
 - (void) renderPageAtIndex:(NSUInteger)index inContext:(CGContextRef)ctx {
     NSString *text = [pagination contentForPage:index+1];
-    
     
     Link *link = [Link linkWithString:text];
     if(link != nil){
@@ -291,7 +262,7 @@
     
     CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
     CGContextSetFillColorWithColor(ctx, [UIColor redColor].CGColor);
-    //draw link 
+    //draw link
     if (link) {
         NSString *showStr = [NSString stringWithFormat:@"①——《%@》",link.name];
         if (link.type == LinkTypeMusic) {
@@ -310,13 +281,13 @@
 
 - (void)dealloc {
     [bookself release];
-    [catalog release];
+    [catalogButton release];
     [catalogView release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setBookself:nil];
-    [self setCatalog:nil];
+    [self setCatalogButton:nil];
     [super viewDidUnload];
 }
 

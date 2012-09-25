@@ -10,7 +10,6 @@
 #import "LeavesViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CatalogView.h"
-#import "MusicScoreViewController.h"
 
 
 
@@ -18,12 +17,11 @@
 @class Pagination;
 
 
-@interface BookController : LeavesViewController<CatalogViewDelegate,showMScoreViewControllerDelegate>
+@interface BookController : LeavesViewController<CatalogViewDelegate>
 {
     Pagination *pagination;
 }
-@property (retain, nonatomic) UIButton *bookself;
-
-@property (retain, nonatomic)  UIButton *catalog;
+@property (retain, nonatomic)  UIButton *bookself;
+@property (retain, nonatomic)  UIButton *catalogButton;
 @property (retain, nonatomic)  CatalogView *catalogView;
 @end

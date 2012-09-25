@@ -10,6 +10,8 @@
 #import "TKAlertCenter.h"
 #import "StringUtil.h"
 #import <MessageUI/MessageUI.h>
+#import "HHNetDataCacheManager.h"
+
 
 
 @interface TomCallonViewController ()
@@ -38,6 +40,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+
+
 }
 
 - (void)viewDidUnload
@@ -486,5 +491,52 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+#pragma mark - static method
+
+//if buttonSeparatorY < 0, we will use the default value.
++ (UIScrollView*)createButtonScrollViewByButtonArray:(NSArray*)buttons
+                                      buttonsPerLine:(int)buttonsPerLine buttonSeparatorY:(CGFloat)buttonSeparatorY
+{
+    float buttonLen;
+    float buttonHeight;
+    int fitButtonsPerLine;
+    int rowIndex;
+    int columnIndex;
+    UIScrollView* scrollView = [[[UIScrollView alloc] init] autorelease];
+    
+    if (buttons && [buttons count]>0) {
+        UIButton* button1 = [buttons objectAtIndex:0];
+        buttonLen = button1.frame.size.width;
+        buttonHeight = button1.frame.size.height;
+        fitButtonsPerLine = 320/buttonLen;
+    }
+    
+    
+    if (buttonLen*buttonsPerLine <=  320 && buttonsPerLine >= 0) {
+        fitButtonsPerLine = buttonsPerLine;
+    }
+    
+    float buttonSeparatorX = (320-fitButtonsPerLine*buttonLen)/(fitButtonsPerLine+1);
+    if (buttonSeparatorY < 0) {
+        buttonSeparatorY =2 * buttonHeight/fitButtonsPerLine;
+    }
+    
+    for (int i=0; i<[buttons count]; i++) {
+        //
+        rowIndex = i/buttonsPerLine;
+        columnIndex = i%buttonsPerLine;
+        UIButton *button = [buttons objectAtIndex:i];
+        button.frame = CGRectMake(buttonSeparatorX+columnIndex*(buttonSeparatorX+buttonLen), rowIndex*(buttonHeight+buttonSeparatorY),buttonLen, buttonHeight);
+        [scrollView addSubview:button];
+    }
+    [scrollView setContentSize:CGSizeMake(320, ([buttons count]/fitButtonsPerLine+1)*(buttonHeight+buttonSeparatorY))];
+    [scrollView setBackgroundColor:[UIColor colorWithRed:0xF8/255.0
+                                                   green:0xFC/255.0
+                                                    blue:0xFE/255.0
+                                                   alpha:1]];
+    return scrollView;
+}
+
 
 @end

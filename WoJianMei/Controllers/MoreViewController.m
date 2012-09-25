@@ -226,13 +226,6 @@ typedef enum {
     [self performSegueWithIdentifier:@"AboutViewControllerSegue" sender:self];
 }
 
--(void)logout
-{
-    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
-    webV.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:webV animated:YES];
-    [webV release];
-}
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -334,7 +327,6 @@ typedef enum {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-//        [self logout];
     }
 }
 

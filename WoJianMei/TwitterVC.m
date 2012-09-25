@@ -129,7 +129,7 @@
         _shouldPostImage = YES;
     }
     self.theImageView.image = _demoWorkOutImage;
-    self.theTextView.text =  [NSString stringWithFormat:@"各位帅哥猛男美女淑女！！！在“中华健美客户端 ”的帮助下，我练习了%@ 。想要健美身材,就关注 @中华健美 啦!",_demoWorkOutMethods] ;
+    self.theTextView.text =  [NSString stringWithFormat:@"各位帅哥猛男美女淑女！！！在“爱健美客户端 ”的帮助下，我练习了%@ 。想要健美身材,就关注 @爱健美网站啦!",_demoWorkOutMethods] ;
     
 }
 

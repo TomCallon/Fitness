@@ -120,10 +120,10 @@
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 								   SINA_APP_KEY,                    @"client_id",       //申请的appkey
 								   @"token",                        @"response_type",   //access_token
-								   @"http://",   @"redirect_uri",    //申请时的重定向地址
+								   @"http://hi.baidu.com/jt_one",   @"redirect_uri",    //申请时的重定向地址
 								   @"mobile",                       @"display",         //web页面的显示方式
                                    nil];
-//    hi.baidu.com/jt_one
+   //http://hi.baidu.com/jt_one 重新定向地址
 	
 	NSURL *url = [self generateURL:SINA_API_AUTHORIZE params:params];
 	NSLog(@"url= %@",url);

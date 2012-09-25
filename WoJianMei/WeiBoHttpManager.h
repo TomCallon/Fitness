@@ -20,8 +20,8 @@
 //然后给你注册的应用添加几个测试账号，用测试账号登陆。
 #define SINA_APP_KEY                @"239725454"    
                                //中华健美239725454     原来作者3601604349
-#define SINA_APP_SECRET             @"e2064ac8fab9d889a9eccecc5babad11"
-       //中华健美 ：e2064ac8fab9d889a9eccecc5babad11  原来作者  7894dfdd1fc2ce7cc6e9e9ca620082fb"
+#define SINA_APP_SECRET             @"7894dfdd1fc2ce7cc6e9e9ca620082fb"
+       //中华健美 ：7894dfdd1fc2ce7cc6e9e9ca620082fb  原来作者  7894dfdd1fc2ce7cc6e9e9ca620082fb"
 
 #define USER_INFO_KEY_TYPE          @"requestType"
 #define USER_STORE_ACCESS_TOKEN     @"SinaAccessToken"

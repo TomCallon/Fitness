@@ -16,7 +16,7 @@
 	CGSize pageSize;
 }
 
-@property (assign) CGSize pageSize;
+@property (assign,nonatomic) CGSize pageSize;
 @property (assign) id<LeavesViewDataSource> dataSource;
 
 - (id) initWithPageSize:(CGSize)aPageSize;

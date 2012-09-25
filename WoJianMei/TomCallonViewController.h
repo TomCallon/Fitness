@@ -16,6 +16,7 @@
     
     UIAlertView				*_alertView;
     NSString*				_backgroundImageName;
+    
 
 
 }
@@ -92,5 +93,12 @@
 -(void)sendSms:(NSString*)receiver body:(NSString*)body;
 -(void)sendSmsWithReceivers:(NSArray*)receivers body:(NSString*)body;
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result;
+
+#pragma mark Create buttons at scroll View
+#pragma mark - static method
+//if buttonSeparatorY < 0, we will use the default value.
++ (UIScrollView*)createButtonScrollViewByButtonArray:(NSArray*)buttons
+                                      buttonsPerLine:(int)buttonsPerLine buttonSeparatorY:(CGFloat)buttonSeparatorY;
+
 
 @end

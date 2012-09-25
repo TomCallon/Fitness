@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "TomCallonTableViewController.h"
 
-@interface NutritionViewController : TomCallonTableViewController
+@interface NutritionViewController : TomCallonTableViewController<UITableViewDataSource,UITableViewDelegate>
+
+
+{
+    UIScrollView *_buttonScrollView;
+
+}
+@property (nonatomic,retain) IBOutlet UIScrollView *buttonScrollView;
+
 
 @end

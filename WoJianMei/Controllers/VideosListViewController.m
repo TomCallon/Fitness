@@ -91,93 +91,17 @@
 #pragma mark -
 #pragma mark -Send WeiBlog
 
+
 -(void)sendWeiBlog{
-    
-    TwitterVC *tv = [[TwitterVC alloc]initWithNibName:@"TwitterVC" bundle:nil];    
-    [self.navigationController pushViewController:tv animated:YES];
-    [tv release];
+    NSLog(@"Send Weibo now");
 
 }
-
--(void)initWeiBlogSettings{
-  
-    //如果未授权，则调入授权页面。
-    NSString *authToken = [[NSUserDefaults standardUserDefaults] objectForKey:USER_STORE_ACCESS_TOKEN];
-    NSLog([weiBoMessageManager isNeedToRefreshTheToken] == YES ? @"need to login":@"will login");
-    if (authToken == nil || [weiBoMessageManager isNeedToRefreshTheToken])
-    {
-        shouldLoad = YES;
-        OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
-        webV.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:webV animated:YES];
-        [webV release];
-    }
-    else
-    {
-        weiBoMessageManager =[WeiBoMessageManager getInstance];
-        [weiBoMessageManager getUserID];
-        [[ZJTStatusBarAlertWindow getInstance] showWithString:@"正在载入，请稍后..."];
-    }
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetUserID:)      name:MMSinaGotUserID            object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetUserInfo:)    name:MMSinaGotUserInfo          object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector
-        (relogin)            name:NeedToReLogin              object:nil];
-    
-    
-}
-
--(void)didGetUserID:(NSNotification*)sender
-{
-     self.userID = sender.object;
-    [[NSUserDefaults standardUserDefaults] setObject:userID forKey:USER_STORE_USER_ID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [weiBoMessageManager getUserInfoWithUserID:[userID longLongValue]];
-    
-}
-
--(void)didGetUserInfo:(NSNotification*)sender
-{
-     User *user = sender.object;
-    [ZJTHelpler getInstance].user = user;
-    [[NSUserDefaults standardUserDefaults] setObject:user.screenName forKey:USER_STORE_USER_NAME];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
--(void)loginSucceed
-{
-    shouldLoad = YES;
-}
-
-
--(void)relogin
-{
-    shouldLoad = YES;
-    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
-    webV.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:webV animated:NO];
-    [webV release];
-}
-
-//得到图片
--(void)getAvatar:(NSNotification*)sender
-{
-    
-    
-}
-
-
--(void)mmRequestFailed:(id)sender
-{
-    [[ZJTStatusBarAlertWindow getInstance] hide];
-}
-
 
 
 #pragma mark -
 #pragma mark -View LifyStytle
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -194,20 +118,7 @@
     self.navigationItem.rightBarButtonItem = retwitterBtn;
     [retwitterBtn release];
 
-    
-    [self  initWeiBlogSettings];
-
-    [defaultNotifCenter addObserver:self selector:@selector(getAvatar:)         name:HHNetDataCacheNotification object:nil];
-    [defaultNotifCenter addObserver:self selector:@selector
-     (mmRequestFailed:)   name:MMSinaRequestFailed object:nil];
-    [defaultNotifCenter addObserver:self selector:@selector
-     (loginSucceed)       name:DID_GET_TOKEN_IN_WEB_VIEW object:nil];
-
-    [[ZJTStatusBarAlertWindow getInstance] hide];
-
-    
-    
-    
+       
     [self initWorkOutDatas];
     [self clickButtons:self.selectedButton];
 }
@@ -217,15 +128,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     
-    
-    //////Sina weibo 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MMSinaGotUserID            object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MMSinaGotUserInfo          object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NeedToReLogin              object:nil];
-    
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MMSinaRequestFailed object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:DID_GET_TOKEN_IN_WEB_VIEW object:nil];
 
     
     
@@ -249,21 +151,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     //    self.tableView.hidden = TRUE;
     
-       
     
     [super viewWillAppear:animated];
-    ///// weiblog
-    
-    if (shouldLoad)
-    {
-        shouldLoad = NO;
-        [weiBoMessageManager getUserID];
-        [weiBoMessageManager getHomeLine:-1 maxID:-1 count:-1 page:-1 baseApp:-1 feature:-1];
-        //        [[SHKActivityIndicator currentIndicator] displayActivity:@"正在载入..." inView:self.view];
-        [[ZJTStatusBarAlertWindow getInstance] showWithString:@"正在载入，请稍后..."];
-    }
-    
-    
     
     //////in app purchasing
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
@@ -482,7 +371,7 @@
 
 -(void)didClickSinaWeiBlogButton:(id)sender atIndex:(NSIndexPath *)indexPath{
   
-    Video *video = [_dataList objectAtIndex:indexPath.row];
+   Video *video = [_dataList objectAtIndex:indexPath.row];
 //
 //    if(kCFCoreFoundationVersionNumber >kCFCoreFoundationVersionNumber_iOS_5_1)
 //    {
@@ -510,7 +399,7 @@
 //            // 给view controller初始化默认的图片，url，文字信息
 //            UIImage *shareImage = video.image;
 //            
-//            NSURL *url = [NSURL URLWithString:@"www.zhonghuafitness.com"];
+//            NSURL *url = [NSURL URLWithString:@"www.aijianmei.com"];
 //            NSString *workMethod = [NSString stringWithFormat:@"在中华健美客户端的帮助下,我练习了<<%@>>%@,每组%@,一共%@",video.title,video.workOut.sets,video.workOut.repeatTimes,video.workOut.workOutTimeLength];
 //
 //            [socialVC setInitialText:workMethod];
