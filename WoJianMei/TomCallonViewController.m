@@ -11,6 +11,8 @@
 #import "StringUtil.h"
 #import <MessageUI/MessageUI.h>
 #import "HHNetDataCacheManager.h"
+#import "AGIPCToolbarItem.h"
+
 
 
 
@@ -22,6 +24,8 @@
 @synthesize loadingView =_loadingView;
 @synthesize alertView =_alertView;
 @synthesize  backgroundImageName =_backgroundImageName;
+@synthesize imagefromPicker = _imagefromPicker;
+@synthesize imageArrayFromImagePicker = _imageArrayFromImagePicker;
 
 
 
@@ -32,6 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    
     }
     return self;
 }
@@ -42,7 +47,8 @@
 	// Do any additional setup after loading the view.
     
 
-
+    self.imageArrayFromImagePicker = [NSMutableArray array];
+    
 }
 
 - (void)viewDidUnload
@@ -303,6 +309,18 @@
 
 
 
+-(void)setNavigationLeftButtonHidden:(BOOL)hidden{
+    
+    [self.navigationItem setLeftBarButtonItem:nil];
+
+}
+-(void)setNavigationRightButtonHidden:(BOOL)hidden{
+    
+    [self.navigationItem setRightBarButtonItem:nil];
+    
+}
+
+
 #pragma mark SMS Methods
 
 -(void)sendSms:(NSString*)receiver body:(NSString*)body
@@ -537,6 +555,151 @@
                                                    alpha:1]];
     return scrollView;
 }
+
+
+
+#pragma mark - TAKE OR GET IMAGE  Methods
+- (void)addSinglePhoto
+{
+    UIImagePickerController * imagePickerController = [[UIImagePickerController alloc]init];
+    imagePickerController.navigationBar.tintColor = [UIColor colorWithRed:72.0/255.0 green:106.0/255.0 blue:154.0/255.0 alpha:1.0];
+	imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+	imagePickerController.delegate = self;
+	imagePickerController.allowsEditing = NO;
+	[self presentModalViewController:imagePickerController animated:YES];
+	[imagePickerController release];
+}
+
+- (void)addMultiplePhotos
+{
+    
+    AGImagePickerController *imagePickerController = [[AGImagePickerController alloc] initWithFailureBlock:^(NSError *error) {
+        NSLog(@"Fail. Error: %@", error);
+        
+        if (error == nil) {
+            NSLog(@"User has cancelled.");
+            [self dismissModalViewControllerAnimated:YES];
+        } else {
+            
+            // We need to wait for the view controller to appear first.
+            [self.imageArrayFromImagePicker removeAllObjects];
+
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self dismissModalViewControllerAnimated:YES];
+            });
+        }
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+        
+    } andSuccessBlock:^(NSArray *info) {
+        [self.imageArrayFromImagePicker setArray:info];
+        
+        NSLog(@"Info: %@", info);
+        [self dismissModalViewControllerAnimated:YES];
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    }];
+    
+    // Show saved photos on top
+    imagePickerController.shouldShowSavedPhotosOnTop = YES;
+    imagePickerController.selection = self.imageArrayFromImagePicker;
+    
+    // Custom toolbar items
+    AGIPCToolbarItem *selectAll = [[AGIPCToolbarItem alloc] initWithBarButtonItem:[[[UIBarButtonItem alloc] initWithTitle:@"+ Select All" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease] andSelectionBlock:^BOOL(NSUInteger index, ALAsset *asset) {
+        return YES;
+    }];
+    
+    
+    AGIPCToolbarItem *flexible = [[AGIPCToolbarItem alloc] initWithBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease] andSelectionBlock:nil];
+    
+    
+    AGIPCToolbarItem *selectOdd = [[AGIPCToolbarItem alloc] initWithBarButtonItem:[[[UIBarButtonItem alloc] initWithTitle:@"+ Select Odd" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease] andSelectionBlock:^BOOL(NSUInteger index, ALAsset *asset) {
+        return !(index % 2);
+    }];
+    
+    
+    AGIPCToolbarItem *deselectAll = [[AGIPCToolbarItem alloc] initWithBarButtonItem:[[[UIBarButtonItem alloc] initWithTitle:@"- Deselect All" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease] andSelectionBlock:^BOOL(NSUInteger index, ALAsset *asset) {
+        return NO;
+    }];
+    
+    
+    imagePickerController.toolbarItemsForSelection = [NSArray arrayWithObjects:selectAll, flexible, selectOdd, flexible, deselectAll, nil];
+    //    imagePickerController.toolbarItemsForSelection = [NSArray array];
+    [selectOdd release];
+    [flexible release];
+    [selectAll release];
+    [deselectAll release];
+    
+    
+    //    imagePickerController.maximumNumberOfPhotos = 3;
+    [self presentModalViewController:imagePickerController animated:YES];
+    [imagePickerController release];
+
+
+}
+
+- (void)takePhoto
+{
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"该设备不支持拍照功能"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"好", nil];
+        [alert show];
+        [alert release];
+    }
+    else
+    {
+        UIImagePickerController * imagePickerController = [[UIImagePickerController alloc]init];
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePickerController.delegate = self;
+        imagePickerController.allowsEditing = NO;
+        [self presentModalViewController:imagePickerController animated:YES];
+        [imagePickerController release];
+    }
+}
+
+-(void)addImageAlert
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"插入图片" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"系统相册",@"拍摄", nil];
+    [alert show];
+    [alert release];
+}
+
+#pragma mark -
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissModalViewControllerAnimated:YES];
+    UIImage * image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    self.imagefromPicker = image;
+
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissModalViewControllerAnimated:YES];
+    
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"index = %d",buttonIndex);
+    if (buttonIndex == 1)
+    {
+        [self addSinglePhoto];
+    }
+    else if(buttonIndex == 2)
+    {
+        [self takePhoto];
+    }
+}
+
 
 
 @end

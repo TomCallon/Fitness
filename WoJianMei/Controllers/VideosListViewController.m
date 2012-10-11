@@ -30,6 +30,8 @@
 #import "TwitterVC.h"
 #import "ZJTGloble.h"
 #import "ZJTHelpler.h"
+
+#import "MFSideMenu.h"
 //#import "SHKActivityIndicator.h"
 
 
@@ -107,7 +109,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-
+   
+    
 
    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bottom_bg.png"] forBarMetrics:UIBarMetricsDefault]; 
     
@@ -115,10 +118,14 @@
     [self myFollowCountBadgeViewInit];
         
     UIBarButtonItem *retwitterBtn = [[UIBarButtonItem alloc]initWithTitle:@"发微博" style:UIBarButtonItemStylePlain target:self action:@selector(sendWeiBlog)];
-    self.navigationItem.rightBarButtonItem = retwitterBtn;
+    self.navigationController.navigationItem.rightBarButtonItem = retwitterBtn;
     [retwitterBtn release];
-
-       
+   
+    
+    
+    
+    
+    
     [self initWorkOutDatas];
     [self clickButtons:self.selectedButton];
 }
@@ -132,9 +139,9 @@
     
     
     //////in app purchasing
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductsLoadedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self  name:kProductPurchasedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self   name:kProductPurchaseFailedNotification object: nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductsLoadedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self  name:kProductPurchasedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self   name:kProductPurchaseFailedNotification object: nil];
     
     
     
@@ -154,25 +161,45 @@
     
     [super viewWillAppear:animated];
     
-    //////in app purchasing
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:kProductPurchasedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(productPurchaseFailed:) name:kProductPurchaseFailedNotification object: nil];
+    UIViewController *nv =[self.navigationController topViewController];
+    [nv.navigationController.navigationBar setUserInteractionEnabled:YES];
+
+    [nv.navigationItem setTitle:@"健身视频"];
+    [nv.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bottom_bg.png"] forBarMetrics:UIBarMetricsDefault];
     
-    Reachability *reach = [Reachability reachabilityForInternetConnection];
-    NetworkStatus netStatus = [reach currentReachabilityStatus];
-    if (netStatus == NotReachable) {
-        NSLog(@"No internet connection!");
-    } else {
-        if ([InAppFitnessIAPHelper sharedHelper].products == nil) {
-            
-            [[InAppFitnessIAPHelper sharedHelper] requestProducts];
-            self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            _hud.labelText = @"Loading comics...";
-            [self performSelector:@selector(timeout:) withObject:nil afterDelay:30.0];
-            
-        }
-    }
+    UIBarButtonItem *bar = [[UIBarButtonItem alloc]initWithImage:nil style:UIBarButtonItemStyleBordered target:self action:nil];
+    [bar setTitle:@"asdfsa"];
+    [nv.navigationItem setRightBarButtonItem:bar];
+    
+    UIBarButtonItem *rightbarButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu-icon.png"] style:UIBarButtonItemStyleBordered target:self action:nil];
+    [nv.navigationItem setLeftBarButtonItem:rightbarButton];
+    
+    
+    [MFSideMenuManager sharedManager].navigationController.menuState = MFSideMenuStateVisible;
+    [MFSideMenuManager sharedManager].navigationController.menuState = MFSideMenuStateHidden;
+    
+
+    
+       
+//    //////in app purchasing
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:kProductPurchasedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(productPurchaseFailed:) name:kProductPurchaseFailedNotification object: nil];
+    
+//    Reachability *reach = [Reachability reachabilityForInternetConnection];
+//    NetworkStatus netStatus = [reach currentReachabilityStatus];
+//    if (netStatus == NotReachable) {
+//        NSLog(@"No internet connection!");
+//    } else {
+//        if ([InAppFitnessIAPHelper sharedHelper].products == nil) {
+//            
+//            [[InAppFitnessIAPHelper sharedHelper] requestProducts];
+//            self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//            _hud.labelText = @"Loading comics...";
+//            [self performSelector:@selector(timeout:) withObject:nil afterDelay:30.0];
+//            
+//        }
+//    }
 
 }
 
@@ -224,7 +251,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-  [self performSegueWithIdentifier:@"VideoSegue" sender:self];   
+  [self performSegueWithIdentifier:@"VideoSegue" sender:self];
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

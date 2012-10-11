@@ -7,12 +7,13 @@
 //
 
 #import "CityChosenListViewController.h"
-
+ 
 @interface CityChosenListViewController ()
 
 @end
 
 @implementation CityChosenListViewController
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

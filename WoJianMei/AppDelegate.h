@@ -25,10 +25,12 @@ enum
 
 {
       TomCallonTabBarController	*_tabBarController;
+      UINavigationController *_navigationController;
 
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic,retain) UINavigationController *navigationController;
 
 
 @property (nonatomic, retain)   TomCallonTabBarController	*tabBarController;

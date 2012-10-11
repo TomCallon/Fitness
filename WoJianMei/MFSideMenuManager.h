@@ -23,8 +23,8 @@ typedef enum {
     CGPoint originalOrigin;
 }
 
-@property (nonatomic, strong) UINavigationController *navigationController;
-@property (nonatomic, strong) UITableViewController *sideMenuController;
+@property (nonatomic, retain) UINavigationController *navigationController;
+@property (nonatomic, retain) UITableViewController *sideMenuController;
 @property (nonatomic, assign) MenuSide menuSide;
 @property (nonatomic, assign) MenuOptions options;
 

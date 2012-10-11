@@ -28,6 +28,17 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
+-(void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:YES];
+    
+    UIViewController *nv =[self.navigationController topViewController];
+    [nv.navigationItem setTitle:@"活动中心"];
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:nil];
+    [nv.navigationItem setLeftBarButtonItem:nil];
+    [nv.navigationItem setRightBarButtonItem:rightBarButton];
+
+}
 
 - (void)didReceiveMemoryWarning
 {

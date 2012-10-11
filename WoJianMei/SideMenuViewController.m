@@ -9,6 +9,40 @@
 #import "DemoViewController.h"
 
 @implementation SideMenuViewController
+@synthesize sectionTitlesArray =_sectionTitlesArray;
+@synthesize headerView =_headerView;
+
+
+-(void)dealloc{
+    [super dealloc];
+    [_sectionTitlesArray release];
+    [_headerView release];
+}
+
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIButton *femalebutton  = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    [femalebutton setBackgroundImage:[UIImage imageNamed:@"tabbar_whitebtn2.png"] forState:UIControlStateNormal];
+    UIButton *malebutton  = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [malebutton setBackgroundImage:[UIImage imageNamed:@"tabbar_whitebtn2.png"] forState:UIControlStateNormal];
+    [malebutton setFrame:CGRectMake(40, 2, 80, 50)];
+    [femalebutton setFrame:CGRectMake(150,2,80, 50)];
+
+    [femalebutton setTitle:@"女生" forState:UIControlStateNormal];
+    [malebutton setTitle:@"男生" forState:UIControlStateNormal];
+
+    
+    
+    [view addSubview:femalebutton];
+    [view addSubview:malebutton];
+    self.headerView = view;
+    [view release];
+    [self.tableView setTableHeaderView:self.headerView];
+}
+
 
 #pragma mark - UITableViewDataSource
 
@@ -51,7 +85,7 @@
 //    
 //    NSArray *controllers = [NSArray arrayWithObject:demoController];
 //  [MFSideMenuManager sharedManager].navigationController.viewControllers = controllers;
-//  [MFSideMenuManager sharedManager].navigationController.menuState = MFSideMenuStateHidden;
+ [MFSideMenuManager sharedManager].navigationController.menuState = MFSideMenuStateHidden;
     
     
     

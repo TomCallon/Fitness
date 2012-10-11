@@ -5,9 +5,9 @@
 
 @interface JMStaticContentTableViewSection : NSObject
 
-@property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, strong) NSArray *staticContentCells;
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) NSArray *staticContentCells;
+@property (nonatomic, retain) NSString *title;
 
 - (void) addCell:(JMStaticContentTableViewCellBlock)configurationBlock;
 

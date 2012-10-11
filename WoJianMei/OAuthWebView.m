@@ -102,6 +102,19 @@
 	[webV loadRequest:request];
     [request release];
     [weiboHttpManager release];
+    
+    
+    ////add one cancle button at the right side of the bar.
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(clickCancle)];
+    [self.navigationItem setRightBarButtonItem:leftBarButton];
+    
+    
+    
+}
+
+-(void)clickCancle{
+  
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload

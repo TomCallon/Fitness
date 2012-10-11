@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C54" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="QpV-gh-90h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C54" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="QpV-gh-90h">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--First View Controller - First-->
@@ -27,6 +27,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3354" y="-3729"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="u0x-Yl-9YA">
+            <objects>
+                <viewController id="paO-ES-f48" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Tvm-Px-4I2">
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pmT-Vp-W2u"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wfm-lo-lcj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2690" y="-1512"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="oGG-M3-FWy">
+            <objects>
+                <viewController id="UVk-qa-7pr" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QPO-rH-9LS">
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="Mtn-fs-rOf">
+                                <rect key="frame" x="89" y="54" width="193" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="名称：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="srL-Pe-Szf">
+                                <rect key="frame" x="20" y="57" width="55" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="详细 ：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PHR-Dh-btm">
+                                <rect key="frame" x="20" y="97" width="56" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" id="8yD-vb-rNJ">
+                                <rect key="frame" x="89" y="97" width="204" height="115"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="NcZ-WX-aWk"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Aj2-pd-5uU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3133" y="-1744"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="phe-nc-tB2">
@@ -64,7 +122,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="汤马克健美科技" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="SRY-8E-4hJ">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="爱健美健美科技" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="SRY-8E-4hJ">
                                 <rect key="frame" x="105" y="123" width="119" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -92,17 +150,17 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Copyright ©2012 Tommark Fitness Corp    All Right Reserved " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="MI3-Ut-WMq">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Copyright ©2012 AiJianMei Fitness Corp    All Right Reserved " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="MI3-Ut-WMq">
                                 <rect key="frame" x="24" y="385" width="354" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="汤马克健美科技有限公司   版权所有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="2ar-XU-g3G">
-                                <rect key="frame" x="29" y="356" width="270" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="爱健美信息科技（广州)有限公司   版权所有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="2ar-XU-g3G">
+                                <rect key="frame" x="22" y="351" width="326" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -113,7 +171,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xXH-LY-GsM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3018" y="-1968"/>
+            <point key="canvasLocation" x="3422" y="-2184"/>
         </scene>
         <!--Setting View Controller - Second-->
         <scene sceneID="13">
@@ -678,32 +736,34 @@
                     <navigationItem key="navigationItem" id="lhJ-Sy-a5t"/>
                     <connections>
                         <segue destination="Fff-mX-M9L" kind="push" identifier="AboutViewControllerSegue" id="kkW-pw-u1x"/>
+                        <segue destination="UVk-qa-7pr" kind="push" identifier="FeedbackSegue" id="rxF-iC-muf"/>
+                        <segue destination="paO-ES-f48" kind="push" identifier="CoachSegue" id="KH1-xG-bcg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="doW-v4-jiV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2451" y="-2020"/>
+            <point key="canvasLocation" x="2197" y="-1968"/>
         </scene>
-        <!--Fitnss Plan View Controller - 健身计划-->
+        <!--Activities Center View Controller - 活动中心-->
         <scene sceneID="VlY-SH-fVL">
             <objects>
-                <viewController storyboardIdentifier="FitnssPlanViewController" id="Dh2-yJ-LXq" customClass="FitnssPlanViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ActivitiesCenterViewController" id="Dh2-yJ-LXq" customClass="ActivitiesCenterViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8rO-dD-3n1">
                         <rect key="frame" x="0.0" y="20" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="健身计划" id="JT6-Ww-gl7"/>
+                    <tabBarItem key="tabBarItem" title="活动中心" id="JT6-Ww-gl7"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wZL-8w-6VZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3489" y="-2164"/>
+            <point key="canvasLocation" x="2753" y="-2508"/>
         </scene>
-        <!--Navigation Controller - 视频-->
+        <!--Navigation Controller - 锻炼-->
         <scene sceneID="uQV-SO-9Jz">
             <objects>
                 <navigationController id="fQp-cq-Xnu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="视频" id="9Ha-NC-SlC"/>
+                    <tabBarItem key="tabBarItem" title="锻炼" id="9Ha-NC-SlC"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="4CV-zj-fjz">
@@ -752,114 +812,6 @@
         <image name="publish_button_32.gif" width="142" height="32"/>
         <image name="star2.png" width="16" height="16"/>
     </resources>
-    <classes>
-        <class className="AboutViewController" superclassName="TomCallonViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AboutViewController.h"/>
-        </class>
-        <class className="BackgroundView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BackgroundView.h"/>
-        </class>
-        <class className="FirstViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
-        </class>
-        <class className="FitnssPlanViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FitnssPlanViewController.h"/>
-        </class>
-        <class className="MoreViewController" superclassName="TomCallonViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MoreViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sinaWeiBlogshareButton:"/>
-            </relationships>
-        </class>
-        <class className="MyselfViewController" superclassName="TomCallonTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyselfViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="myFooterView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="myHeaderView" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="NutritionDetailCell" superclassName="TomCallonTableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NutritionDetailCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="clickedNumberLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="creatdDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="introductionImageButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="nutritionTitleLabel" candidateClass="OHAttributedLabel"/>
-            </relationships>
-        </class>
-        <class className="NutritionViewController" superclassName="TomCallonTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NutritionViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="buttonScrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="OHAttributedLabel" superclassName="UILabel">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OHAttributedLabel.h"/>
-            <relationships>
-                <relationship kind="outlet" name="delegate"/>
-            </relationships>
-        </class>
-        <class className="SettingViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="callTheRestaurant:"/>
-                <relationship kind="action" name="loginWithSinaWeiBlog:"/>
-                <relationship kind="action" name="sendMessageToRestaurant:"/>
-            </relationships>
-        </class>
-        <class className="ShowAlertTextViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShowAlertTextViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="messageLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="ShowBigImageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShowBigImageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="showBigImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="TomCallonTabBarController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TomCallonTabBarController.h"/>
-        </class>
-        <class className="TomCallonTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TomCallonTableViewCell.h"/>
-        </class>
-        <class className="TomCallonTableViewController" superclassName="TomCallonViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TomCallonTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="TomCallonViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TomCallonViewController.h"/>
-        </class>
-        <class className="VideoListCell" superclassName="TomCallonTableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VideoListCell.h"/>
-            <relationships>
-                <relationship kind="action" name="clickBuyButton:"/>
-                <relationship kind="action" name="clickFollowButton:"/>
-                <relationship kind="action" name="clickShowBigImage:"/>
-                <relationship kind="action" name="clickSinaWeiBlogButton:"/>
-                <relationship kind="outlet" name="downLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="followButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="priceLabel" candidateClass="OHAttributedLabel"/>
-                <relationship kind="outlet" name="productImageButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="repeatTimesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="setsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeLeghtLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="upLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="VideosListViewController" superclassName="TomCallonTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VideosListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="clickButtons:"/>
-                <relationship kind="outlet" name="myFollowButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="selectedButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -14,7 +14,7 @@
 
 
 
-@interface MyselfViewController : TomCallonTableViewController<UITableViewDataSource,UITableViewDelegate,MyselfCellDelegate>
+@interface MyselfViewController : TomCallonTableViewController<UITableViewDataSource,UITableViewDelegate,MyselfCellDelegate,UINavigationControllerDelegate>
 
 {
 
@@ -32,18 +32,20 @@
     BOOL                           shouldLoad;
     BOOL                     shouldLoadAvatar;
     
-    UIImageView                *_headerVImageV;
+    UIButton                *_headerVImageButton;
     UIImageView                *_footerVImageV;
     UIImage                     *_avatarImage;
     
     UIView                      *myHeaderView;
 	UIView                      *myFooterView;
+    
+    UILabel                    *_userNameLabel;
 
 
 }
 
 
-@property (retain, nonatomic) UIImageView *headerVImageV;
+@property (retain, nonatomic) UIButton *headerVImageButton;
 @property (retain, nonatomic) UIImageView *footerVImageV;
 
 @property (nonatomic, retain) UIImage                     *avatarImage;
@@ -53,8 +55,10 @@
 @property (nonatomic, retain)   NSMutableDictionary    *imageDictionary;
 
 
-@property (nonatomic, retain) IBOutlet UIView *myHeaderView;
-@property (nonatomic, retain) IBOutlet UIView *myFooterView;
+@property (nonatomic, retain)  UIView *myHeaderView;
+@property (nonatomic, retain)  UIView *myFooterView;
+@property (nonatomic, retain)  UILabel *userNameLabel;
+
 
 
 @end

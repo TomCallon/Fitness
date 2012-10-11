@@ -26,4 +26,7 @@ typedef enum {
 // view controllers can call this in order to setup the proper UIBarButtonItem
 - (void) setupSideMenuBarButtonItem;
 
+
+
+
 @end

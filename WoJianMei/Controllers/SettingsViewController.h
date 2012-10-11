@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import "JMStaticContentTableViewController.h"
 
-@interface SettingViewController : UIViewController<MFMessageComposeViewControllerDelegate>
+@interface SettingsViewController : JMStaticContentTableViewController<MFMessageComposeViewControllerDelegate>
 
 
 

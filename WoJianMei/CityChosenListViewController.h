@@ -8,6 +8,19 @@
 
 #import "TomCallonTableViewController.h"
 
+@protocol CityChooseDelegate <NSObject>
+
+-(void)didChooseCity:(id)city;
+
+@end
+
 @interface CityChosenListViewController : TomCallonTableViewController
+{
+
+    id<CityChooseDelegate>delegate;
+
+}
+@property (nonatomic, assign) id<CityChooseDelegate>delegate;
+
 
 @end

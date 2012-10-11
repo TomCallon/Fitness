@@ -135,7 +135,15 @@
 -(void)viewWillAppear:(BOOL)animated{
   
     [super viewWillAppear:YES];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    UIViewController *nv =[self.navigationController topViewController];
+    [nv.navigationItem setTitle:@"健身营养"];
+    
+    UIBarButtonItem *bar = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonItemStylePlain target:self action:nil];
+    [bar setBackgroundImage:nil forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [nv.navigationItem setLeftBarButtonItem:nil];
+    [nv.navigationItem setRightBarButtonItem:bar];
+    
 
 }
 - (void)viewDidUnload

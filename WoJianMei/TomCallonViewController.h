@@ -9,13 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "TKLoadingView.h"
 #import <MessageUI/MessageUI.h>
+#import "AGImagePickerController.h"
 
-@interface TomCallonViewController : UIViewController<MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>{
+
+@interface TomCallonViewController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>{
 
     TKLoadingView*          _loadingView;
-    
     UIAlertView				*_alertView;
     NSString*				_backgroundImageName;
+    
+    
+    UIImage *_imagefromPicker;
+    NSMutableArray *_imageArrayFromImagePicker;
     
 
 
@@ -23,6 +28,9 @@
 @property (nonatomic, retain) TKLoadingView*        loadingView;
 @property (nonatomic, retain) UIAlertView			*alertView;
 @property (nonatomic, retain) NSString*				backgroundImageName;
+@property (nonatomic, retain) UIImage *imagefromPicker;
+@property (nonatomic, retain) NSMutableArray *imageArrayFromImagePicker;
+
 
 
 
@@ -99,6 +107,17 @@
 //if buttonSeparatorY < 0, we will use the default value.
 + (UIScrollView*)createButtonScrollViewByButtonArray:(NSArray*)buttons
                                       buttonsPerLine:(int)buttonsPerLine buttonSeparatorY:(CGFloat)buttonSeparatorY;
+
+
+
+#pragma mark ADD IMAGES 
+-(void)addImageAlert;
+-(void)addSinglePhoto;
+- (void)addMultiplePhotos;
+-(void)takePhoto;
+
+
+
 
 
 @end

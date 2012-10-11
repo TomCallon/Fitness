@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SideMenuViewController.h"
 
-@interface MySideMenueViewController : UITableViewController
+@interface MySideMenueViewController : SideMenuViewController
+{
+
+}
 
 @end

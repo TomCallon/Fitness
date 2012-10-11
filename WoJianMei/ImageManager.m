@@ -18,6 +18,9 @@
 }
 
 
+
+
+/////BookImageview
 + (UIImage *)bookBgImage
 {
     return [UIImage imageNamed:@"book_bg.png"];
@@ -49,5 +52,39 @@
 {
     return [UIImage imageNamed:@"video.png"];            
 }
+
+
+
+
+
+///////////关联页面
+
++(UIImage*)weiboImage{
+    return [UIImage imageNamed:@"LOGO_16x16.png"];
+}
++(UIImage*)qqImage{
+    return [UIImage imageNamed:@"qq.png"];
+}
++(UIImage*)renrenImage{
+    return [UIImage imageNamed:@"renren.png"];
+}
++(UIImage*)kaixinImage{
+    return [UIImage imageNamed:@"48x48.png"];
+}
++(UIImage*)tengxunWeiboImage{
+    return [UIImage imageNamed:@"tengxunweibo.png"];
+}
++(UIImage*)doubanImage{
+    return [UIImage imageNamed:@"douban.png"];
+}
++(UIImage*)loginEmailImage{
+    return [UIImage imageNamed:@"email.png"];
+}
+
+///////AVATAR
++(UIImage*)avatarbackgroundImage{
+    return [UIImage imageNamed:@"touxiang_40x40@2x.png"];
+}
+
 
 @end

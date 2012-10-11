@@ -21,4 +21,23 @@
 + (UIImage *)musicButton;
 + (UIImage *)videoButton;
 
+
+
+
+
++(UIImage*)weiboImage;
++(UIImage*)qqImage;
++(UIImage*)renrenImage;
++(UIImage*)kaixinImage;
++(UIImage*)tengxunWeiboImage;
++(UIImage*)doubanImage;
++(UIImage*)loginEmailImage;
+
+
+
+
++(UIImage*)avatarbackgroundImage;
+
+
+
 @end

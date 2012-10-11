@@ -48,13 +48,16 @@ static char velocityKey;
                                             action:@selector(backButtonPressed:)] autorelease];
 }
 
+
 - (void) setupSideMenuBarButtonItem {
+    
+    ////如果menue side 是在右边的
     if([MFSideMenuManager sharedManager].menuSide == MenuRightHandSide
        && [MFSideMenuManager menuButtonEnabled]) {
         self.navigationItem.rightBarButtonItem = [self menuBarButtonItem];
         return;
     }
-    
+    ////如果menue  是可见的，同时当前是navigation controller 的 第一个view controller  
     if(self.navigationController.menuState == MFSideMenuStateVisible ||
        [[self.navigationController.viewControllers objectAtIndex:0] isEqual:self]) {
         if([MFSideMenuManager menuButtonEnabled]) {

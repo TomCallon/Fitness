@@ -69,6 +69,25 @@
 
     
     [self.view addSubview:kal.view];
+    
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+   
+    [super viewWillAppear:YES];
+    
+    
+    UIViewController *nv =[self.navigationController topViewController];
+    [nv.navigationItem setTitle:@"健身计划"];
+
+    UIBarButtonItem *bar = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:nil];
+    
+    [nv.navigationItem setLeftBarButtonItem:nil];
+    [nv.navigationItem setRightBarButtonItem:bar];
+    
+
+
 }
 
 - (void)didReceiveMemoryWarning

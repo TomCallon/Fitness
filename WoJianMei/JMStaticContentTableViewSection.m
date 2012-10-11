@@ -7,6 +7,16 @@
 @synthesize staticContentCells = _staticContentCells;
 @synthesize title = _title;
 
+
+
+-(void)dealloc{
+    
+    [super dealloc];
+    [_tableView release];
+    [_staticContentCells release];
+    [_title release];
+
+}
 - (void) addCell:(JMStaticContentTableViewCellBlock)configurationBlock {
 	[self addCell:configurationBlock whenSelected:nil];
 }

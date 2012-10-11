@@ -14,15 +14,6 @@
 
 @implementation MySideMenueViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,6 +23,12 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+//    NSArray *sectionTitlesArray  = [NSArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"", nil];
+//    NSArray *rowsArray  = [NSArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"", nil];
+    
+    self.sectionTitlesArray  = [NSArray arrayWithObjects:@"健身",@"减肥",@"增肌肉",@"瑜伽",@"爵士舞",@"肚皮舞",@"丰胸",@"提臀",@"其它", nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,30 +37,44 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    
+    // fixed font style. use custom view (UILabel) if you want something different
+   
+    return [NSString stringWithFormat:@"%@",[self.sectionTitlesArray objectAtIndex:section]];
+
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return [self.sectionTitlesArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"Item %d", indexPath.row];
     
     return cell;
+
 }
 
 /*

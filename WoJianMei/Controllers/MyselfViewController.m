@@ -17,6 +17,19 @@
 #import "OAuthWebView.h"
 #import "MyselfCell.h"
 
+#import "ImageManager.h"
+#import "SettingsViewController.h"
+
+
+typedef enum SOCIAL_NET_WORK {
+    SINA_WEIBO_ACCOUNT = 0,
+    TENGXUN_QQ_ACOUNT = 1,
+    RENREN_ACOUNT = 2,
+    TENGXUN_WEIBO_ACCOUNT=3,
+    DOUBAN_ACOUNT = 4,
+    YOUR_EMAIL_ACOUNT=5
+    
+}SOCIAL_NET_WORK;
 
 
 @interface MyselfViewController ()
@@ -25,13 +38,14 @@
 
 @implementation MyselfViewController
 @synthesize avatarImage;
-@synthesize headerVImageV;
+@synthesize headerVImageButton=_headerVImageButton;
 @synthesize user;
 @synthesize userID;
 @synthesize statuesArr;
 @synthesize imageDictionary;
 @synthesize myFooterView;
 @synthesize myHeaderView;
+@synthesize userNameLabel=_userNameLabel;
 
 
 -(void)dealloc{
@@ -39,7 +53,7 @@
     
     [super dealloc];
     
-    [_headerVImageV release];
+    [_headerVImageButton release];
     [_footerVImageV release];
     [_avatarImage  release];
     [_user release];
@@ -48,6 +62,7 @@
     [imageDictionary release];
     [myHeaderView release];
     [myFooterView release];
+    [_userNameLabel release];
 }
 
 
@@ -56,7 +71,12 @@
     
     weiBoMessageManager = [WeiBoMessageManager getInstance];
     defaultNotifCenter = [NSNotificationCenter defaultCenter];
-    self.headerVImageV = [[UIImageView alloc] init];
+    
+    UIButton *button = [[UIButton alloc]init];
+    self.headerVImageButton =  button;
+    [button release];
+    
+    
 }
 
 
@@ -66,6 +86,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+       
     [self setUp];
     
     //如果未授权，则调入授权页面。
@@ -84,6 +105,7 @@
         ///获取当前登陆用户的ID；
         [weiBoMessageManager getUserID];
 //        [[SHKActivityIndicator currentIndicator] displayActivity:@"正在载入..." inView:self.view];
+        ////获取当前登陆用户的一些首页微博等咨询
         [weiBoMessageManager getHomeLine:-1 maxID:-1 count:-1 page:-1 baseApp:-1 feature:-1];
         [[ZJTStatusBarAlertWindow getInstance] showWithString:@"正在载入，请稍后..."];
     }
@@ -104,7 +126,7 @@
     
     
     if (avatarImage) {
-        self.headerVImageV.image = avatarImage;
+        [self.headerVImageButton setImage:avatarImage forState:UIControlStateNormal];
     }
     else {
         [[HHNetDataCacheManager getInstance] getDataWithURL:user.profileLargeImageUrl];
@@ -123,13 +145,13 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bottom_bg.png"] forBarMetrics:UIBarMetricsDefault];
     
     
-    self.dataList = [NSArray arrayWithObjects:@"唐亮-Tom",@"性别",@"区域",@"个性签名", nil];
+    self.dataList = [NSArray arrayWithObjects:@"新浪微博",@"QQ账号",@"人人网账号",@"腾讯微博账号",@"豆瓣网账号",@"我的邮箱账号",@"", nil];
     
 
     UIView *headerView =[[UIView alloc]init];
     UIView *footerView =[[UIView alloc]init];
        
-    [headerView setFrame: CGRectMake(0, 0, 100, 100)];
+    [headerView setFrame: CGRectMake(0, 0, 100, 200)];
     [footerView setFrame: CGRectMake(0, 0, 100, 100)];
 
     self.myHeaderView = headerView;
@@ -139,18 +161,21 @@
     [footerView release];
     
     // set up the table's header view based on our UIView 'myHeaderView' outlet
-	CGRect newFrame = CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, self.myHeaderView.frame.size.height);
+	CGRect newFrame = CGRectMake(0.0, 0.0,self.tableView.bounds.size.width, 100);
     
 	self.myHeaderView.backgroundColor = [UIColor clearColor];
 	self.myHeaderView.frame = newFrame;
     
     
-    
     ////在heade上添加头像图片
-    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"touxiang_40x40@2x.png"]];
-    [imageView setFrame:CGRectMake(20, 16, 60, 60)];
-    [self.myHeaderView addSubview:imageView];
-    [imageView release];
+//    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"touxiang_40x40@2x.png"]];
+    
+    [_headerVImageButton setImage:[ImageManager avatarbackgroundImage] forState:UIControlStateNormal];
+    [_headerVImageButton addTarget:self action:@selector(clickVatarButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_headerVImageButton setFrame:CGRectMake(20, 16, 60, 60)];
+    
+    
+    [self.myHeaderView addSubview:_headerVImageButton];
 	[self.tableView setTableHeaderView: self.myHeaderView];
     // note this will override UITableView's 'sectionHeaderHeight' property
 	
@@ -170,12 +195,24 @@
 
 	self.tableView.tableFooterView = self.myFooterView;	// note this will override UITableView's 'sectionFooterHeight' property
 
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(clickSettingsButton:)];
+    NSArray *array = [[NSArray alloc]initWithObjects:rightBarButton, nil];
+    [rightBarButton release];
+    [self.navigationItem setRightBarButtonItems:array];
+    [array release];
+    
+}
+-(void)clickSettingsButton:(id)sender{
+   
+    SettingsViewController *settingsVC = [[SettingsViewController alloc]init];
+    [self.navigationController pushViewController :settingsVC animated:YES];
+    [settingsVC release];
 }
 
 -(void)viewDidUnload{
 
     [super viewDidUnload];
-    self.headerVImageV = nil;
+    self.headerVImageButton =nil;
     ////first 
     [defaultNotifCenter removeObserver:self name:HHNetDataCacheNotification object:nil];
     [defaultNotifCenter removeObserver:self name:MMSinaRequestFailed        object:nil];
@@ -191,7 +228,47 @@
 
 
 }
-#pragma mark - Methods
+-(void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:YES];
+    [self.tableView reloadData];
+    
+    
+    UIViewController *nv =[self.navigationController topViewController];
+    [nv.navigationItem setTitle:@"我健美"];
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(clickSettingsButton:)];
+    [nv.navigationItem setLeftBarButtonItem:nil];
+    [nv.navigationItem setRightBarButtonItem:rightBarButton];
+    
+}
+
+
+-(void)clickVatarButton:(id)sender{
+   
+    NSLog(@"Click the avatarButton");
+    [self addImageAlert];
+}
+
+#pragma mark -
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissModalViewControllerAnimated:YES];
+    UIImage * image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    self.imagefromPicker = image;
+    NSLog(@"i pick the image now ");
+    self.avatarImage = image;
+    [self.tableView reloadData];
+}
+
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissModalViewControllerAnimated:YES];
+    
+}
+
 
 
 #pragma mark - Methods
@@ -241,20 +318,34 @@
     NSNumber *indexNumber   = [dic objectForKey:HHNetDataCacheIndex];
     NSInteger index = [indexNumber intValue];
     
+
+    
     if([url isEqualToString:self.user.profileLargeImageUrl])
     {
         UIImage * image     = [UIImage imageWithData:[dic objectForKey:HHNetDataCacheData]];
         self.avatarImage = image;
         
         
-        UIImageView *imageView = [[UIImageView alloc]init];
-        self.headerVImageV = imageView;
+        UIButton *button = [[UIButton alloc]init];
+        [button addTarget:self action:@selector(clickVatarButton:) forControlEvents:UIControlEventTouchUpInside];
+        self.headerVImageButton = button;
+        [self.headerVImageButton  setImage:self.avatarImage forState:UIControlStateNormal];
+        [self.headerVImageButton setFrame:CGRectMake(20, 16, 60, 60)];
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+        [view addSubview:self.headerVImageButton];
         
         
-        self.headerVImageV.image = image;
-        [self.headerVImageV setFrame:CGRectMake(20, 16, 60, 60)];
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
-        [view addSubview:self.headerVImageV];
+    
+        
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(200, 20, 100, 30)];
+        
+         self.userNameLabel = label;
+        [self.userNameLabel setText:self.user.name];
+        [view addSubview:self.userNameLabel];
+        [label release];
+        
+        
+        
         [self.tableView setTableHeaderView:view];
         [view release];
         
@@ -373,6 +464,27 @@
 #pragma mark ----------------------------------------————————————————
 #pragma mark  tableviewDelegate Method
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;    // fixed font style. use custom view (UILabel) if you want something different
+{
+    
+    
+    if (section==0) {
+        return @"section0";
+    }
+    if (section==1) {
+        return @"绑定section1";
+    }
+
+    if (section==2) {
+        return @"绑定账号";
+    }
+    
+    
+    return nil;
+    
+    
+
+}
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -388,7 +500,7 @@
     switch (section) {
         case 0:
             NSLog(@"This is Section one");
-            return 1;
+            return 2;
             break;
         case 1:
             NSLog(@"This is Section two");
@@ -396,7 +508,7 @@
             break;
         case 2:
             NSLog(@"This is Section three");
-            return 3;
+            return 6;
             break;
             
         default:
@@ -434,34 +546,69 @@
     
       cell.delegate = self;
       cell.indexPath = indexPath;
-    
-    switch ([indexPath row]) {
-        case 0:
-            cell.imageView.image =nil;
-            cell.textLabel.text =[_dataList objectAtIndex:indexPath.row];
-            break;
-        case 1:
-            cell.textLabel.text =[_dataList objectAtIndex:indexPath.row];
-            cell.imageView.image =[UIImage imageNamed:@"artist-tab.png"];
-            break;
-        case 2:
-            cell.textLabel.text = [_dataList objectAtIndex:indexPath.row];
-            cell.imageView.image =[UIImage imageNamed:@"music-tab.png"];
-            break;
-        case 3:
-            cell.textLabel.text = @"asdfsadf";
-            break;
-        case 4:
-            cell.textLabel.text = @"asdfsad";
-            break;
-        case 5:
-            cell.textLabel.text = @"sadfs";
-            break;
-        case 6:
-            cell.textLabel.text = @"sdfs";
-            break;
-        default:
-            break;
+    if (indexPath.section==0) {
+        switch ([indexPath row]) {
+            case 0:
+                cell.imageView.image =[UIImage imageNamed:@"music-tab.png"];
+                cell.textLabel.text =[_dataList objectAtIndex:indexPath.row];
+                break;
+            case 1:
+                cell.textLabel.text =[_dataList objectAtIndex:indexPath.row];
+                cell.imageView.image =[UIImage imageNamed:@"artist-tab.png"];
+                break;
+                default:
+                break;
+        }
+    }
+    if (indexPath.section==1) {
+        switch ([indexPath row]) {
+            case 0:
+                cell.imageView.image =[UIImage imageNamed:@"music-tab.png"];
+                cell.textLabel.text =[_dataList objectAtIndex:indexPath.row];
+                break;
+            case 1:
+                cell.textLabel.text =[_dataList objectAtIndex:indexPath.row];
+                cell.imageView.image =[UIImage imageNamed:@"artist-tab.png"];
+                break;
+            default:
+                break;
+        }
+    }
+    if (indexPath.section==2) {
+        switch ([indexPath row]) {
+            case SINA_WEIBO_ACCOUNT:
+                cell.imageView.image =[ImageManager weiboImage];
+                cell.textLabel.text =@"新浪微博";
+                cell.detailTextLabel.text =@"未绑定";
+                break;
+            case TENGXUN_QQ_ACOUNT:
+                cell.textLabel.text =@"QQ账号";
+                [cell.detailTextLabel setText: @"未绑定"];
+                cell.imageView.image =[ImageManager qqImage];
+                break;
+            case RENREN_ACOUNT:
+                cell.textLabel.text =@"人人账号";
+                cell.detailTextLabel.text =@"未绑定";
+                cell.imageView.image =[ImageManager renrenImage];
+                break;
+            case TENGXUN_WEIBO_ACCOUNT:
+                cell.textLabel.text =@"腾讯微博账号";
+                cell.detailTextLabel.text =@"未绑定";
+                cell.imageView.image =[ImageManager tengxunWeiboImage];
+                break;
+            case DOUBAN_ACOUNT:
+                cell.textLabel.text =@"豆瓣账号";
+                cell.detailTextLabel.text =@"未绑定";
+                cell.imageView.image =[ImageManager doubanImage];
+                break;
+            case YOUR_EMAIL_ACOUNT:
+                cell.textLabel.text =@"你的邮箱";
+                cell.detailTextLabel.text =@"未绑定";
+                cell.imageView.image =[ImageManager loginEmailImage];
+                break;
+            default:
+                break;
+        }
     }
     
     
@@ -469,11 +616,95 @@
     
     return cell;
 }
+
+#pragma mark-
+-(void)loginSinaAccount{
+
+    
+    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
+    webV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webV animated:YES];
+    [webV release];
+
+    
+}
+
+-(void)loginQQAccount{
+    
+    
+    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
+    webV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webV animated:NO];
+    [webV release];
+    
+}
+
+-(void)loginRenrenAccount{
+    
+    
+    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
+    webV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webV animated:NO];
+    [webV release];
+    
+}
+
+-(void)loginTengxunWeiboAccount{
+    
+    
+    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
+    webV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webV animated:NO];
+    [webV release];
+    
+}
+
+-(void)loginDoubanAccount{
+    
+    
+    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
+    webV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webV animated:NO];
+    [webV release];
+    
+}
+
+-(void)loginYouremailAccount{
+    
+    
+    OAuthWebView *webV = [[OAuthWebView alloc]initWithNibName:@"OAuthWebView" bundle:nil];
+    webV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webV animated:NO];
+    [webV release];
+    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-
-    NSLog(@"i did selected row %d",indexPath.row);
-
+    
+    if (indexPath.section ==2) {
+        switch (indexPath.row) {
+            case SINA_WEIBO_ACCOUNT:
+                [self loginSinaAccount];
+                break;
+            case TENGXUN_QQ_ACOUNT:
+                [self loginQQAccount];
+                break;
+            case RENREN_ACOUNT:
+                [self loginRenrenAccount];
+                break;
+            case TENGXUN_WEIBO_ACCOUNT:
+                [self loginTengxunWeiboAccount];
+                break;
+            case DOUBAN_ACOUNT:
+                [self loginDoubanAccount];
+                break;
+            case YOUR_EMAIL_ACOUNT:
+                [self loginYouremailAccount];
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 

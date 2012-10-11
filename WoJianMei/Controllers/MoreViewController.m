@@ -10,6 +10,8 @@
 #import "AboutViewController.h"
 #import <Social/Social.h>
 #import "OAuthWebView.h"
+#import "SettingsViewController.h"
+#import "FitnssPlanViewController.h"
 
 
 
@@ -20,11 +22,10 @@ enum actionsheetNumber{
 
 
 typedef enum {
-    COMPLETE_SCORE = 0,
-//    ASK_YOUR_FRIENDS_TO_COME,
-    WEEK_SCHEDUAL,
+    ASK_FRIENDS_TO_GO_TO_WORKOUT = 0,
+    Find_A_COACH,
     SCORE_NOTICE_SETTING,
-    LANGUAGE_SETTING,
+    WORKOUT_PLANS,
     FEEDBACK,
     RECOMMEND,
     ABOUT,
@@ -56,6 +57,29 @@ typedef enum {
     // Release any retained subviews of the main view.
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:YES];
+    
+    
+    UIViewController *nv =[self.navigationController topViewController];
+    [nv.navigationItem setTitle:@"更多"];
+
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(clickSettingsButton:)];
+    [nv.navigationItem setLeftBarButtonItem:nil];
+    [nv.navigationItem setRightBarButtonItem:rightBarButton];
+    [nv.navigationController.navigationBar.backItem setBackBarButtonItem:rightBarButton];
+}
+
+
+-(void)clickSettingsButton:(id)sender{
+    
+    SettingsViewController *settingVC = [[SettingsViewController alloc]init];
+    [self.navigationController pushViewController:settingVC animated:YES];
+    [settingVC release];
+}
+
 -(void)dealloc{
 
     [super dealloc];
@@ -66,7 +90,7 @@ typedef enum {
 
 - (void)optionListInit
 {
-    NSArray *array = [[NSArray alloc] initWithObjects:@"预约好友", @"预约教练", @"关注我们", @"健身计划推送", @"信息反馈", @"推荐给好友", @"关于中华健美", @"客户端更新",  nil];
+    NSArray *array = [[NSArray alloc] initWithObjects:@"预约好友", @"预约教练", @"健身计划", @"关注我们", @"信息反馈", @"推荐给好友", @"关于中华健美", @"客户端更新",  nil];
     self.listData = array;
     [array release];
 }
@@ -113,16 +137,16 @@ typedef enum {
     
     UIImage *image = nil;
     switch ([indexPath row]) {
-        case COMPLETE_SCORE:
+        case ASK_FRIENDS_TO_GO_TO_WORKOUT:
             image = [UIImage imageNamed:@"szicon1.png"];
             break;
-        case WEEK_SCHEDUAL:
+        case Find_A_COACH:
             image = [UIImage imageNamed:@"szicon2.png"];
             break;
-        case SCORE_NOTICE_SETTING:
+        case WORKOUT_PLANS :
             image = [UIImage imageNamed:@"szicon3.png"];
             break;
-        case LANGUAGE_SETTING:
+        case SCORE_NOTICE_SETTING:
             image = [UIImage imageNamed:@"szicon4.png"];
             break;
         case FEEDBACK:
@@ -169,25 +193,27 @@ typedef enum {
 {
     NSUInteger row = [indexPath row];
     switch (row) {
-        case COMPLETE_SCORE:
+        case ASK_FRIENDS_TO_GO_TO_WORKOUT:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"确定要更换账号吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"更换", nil];
-            [alert show];
-            [alert release];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"确定要更换账号吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"更换", nil];
+//            [alert show];
+//            [alert release];
+            
+            [self askFriendsToGoToWorkout];
+            
         }
             break;
-        case WEEK_SCHEDUAL:
-//            [ScheduleController showScheduleWithSuperController:self];
+        case Find_A_COACH:
+            [self findACoach];
+            break;
+        case  WORKOUT_PLANS :
+            [self showWorkoutPlans];
             break;
         case SCORE_NOTICE_SETTING:
-//            [self showScoreAlert];
-            NSLog(@"关注我们");
-            break;
-        case LANGUAGE_SETTING:
-//            [self showLanguageSelection];
+            //            [self showScoreAlert];
             break;
         case FEEDBACK:
-//            [self showFeedback];
+           [self showFeedback];
             break;
         case RECOMMEND:
             [self showRecommendation];
@@ -206,6 +232,32 @@ typedef enum {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+-(void)askFriendsToGoToWorkout{
+    
+}
+
+-(void)findACoach{
+    NSLog(@"find a coach");
+    [self performSegueWithIdentifier:@"CoachSegue" sender:self];
+}
+
+-(void)showFeedback{
+    
+    [self performSegueWithIdentifier:@"FeedbackSegue" sender:self];
+    
+}
+
+-(void)showWorkoutPlans{
+    
+    
+    FitnssPlanViewController *fVC =[[FitnssPlanViewController alloc]init];
+    [self.navigationController pushViewController:fVC animated:YES];
+    [fVC release];
+    
+    
+}
+
 - (void)showRecommendation
 {
     whichAcctionSheet = RECOMMENDATION;
@@ -220,8 +272,6 @@ typedef enum {
 
 
 -(void)showAboutView{
-    
-    
     
     [self performSegueWithIdentifier:@"AboutViewControllerSegue" sender:self];
 }

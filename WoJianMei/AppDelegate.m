@@ -15,13 +15,18 @@
 #import "VideosListViewController.h"
 #import "MyselfViewController.h"
 #import "NutritionViewController.h"
-#import "FitnssPlanViewController.h"
+#import "ActivitiesCenterViewController.h"
 #import "MoreViewController.h"
 
 
 
 #import "FirstViewController.h"
-#import "SettingViewController.h"
+
+
+#import "SettingsViewController.h"
+#import "MySideMenueViewController.h"
+#import "MFSideMenu.h"
+
 
 #import "UIUtils.h"
 
@@ -31,11 +36,13 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize navigationController =_navigationController;
 @synthesize tabBarController=_tabBarController ;
 
 - (void)dealloc
 {
     [_tabBarController release];
+    [_navigationController release];
     [_window release];
     [super dealloc];
 }
@@ -57,9 +64,9 @@
     
 	VideosListViewController* videosListViewController = (VideosListViewController*)[storyboard instantiateViewControllerWithIdentifier:@"VideoListViewController"];
     [UIUtils addViewControllerFromStoryBoard:videosListViewController
-					 viewTitle:@"健身视频"
+					 viewTitle:@"锻炼"
 					 viewImage:@"b_menu_1.png"
-			  hasNavController:YES
+			  hasNavController:NO
 			   viewControllers:controllers];
     
     
@@ -67,7 +74,7 @@
     [UIUtils addViewControllerFromStoryBoard:myselfViewController
                                    viewTitle:@"我健美"
                                    viewImage:@"b_menu_3.png"
-                            hasNavController:YES
+                            hasNavController:NO
                              viewControllers:controllers];
     
     
@@ -75,15 +82,15 @@
     [UIUtils addViewControllerFromStoryBoard:nutritionViewController
                      viewTitle:@"健身营养"
                      viewImage:@"b_menu_2.png"
-              hasNavController:YES
+              hasNavController:NO
                viewControllers:controllers];
     
     
-    FitnssPlanViewController *fitnssPlanViewController =(FitnssPlanViewController *)[storyboard instantiateViewControllerWithIdentifier:@"FitnssPlanViewController"];
-	[UIUtils addViewControllerFromStoryBoard:fitnssPlanViewController
-					 viewTitle:@"健身计划"
+    ActivitiesCenterViewController *activitiesCenterViewController =(ActivitiesCenterViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ActivitiesCenterViewController"];
+	[UIUtils addViewControllerFromStoryBoard:activitiesCenterViewController
+					 viewTitle:@"活动中心"
 					 viewImage:@"b_menu_4.png"
-			  hasNavController:YES
+			  hasNavController:NO
 			   viewControllers:controllers];
     
     
@@ -91,7 +98,7 @@
 	[UIUtils addViewControllerFromStoryBoard:moreViewController
                                    viewTitle:@"更多"
                                    viewImage:@"b_menu_5.png"
-                            hasNavController:YES
+                            hasNavController:NO
                              viewControllers:controllers];
     
     [self.tabBarController setSelectedImageArray:[NSArray arrayWithObjects:
@@ -115,9 +122,9 @@
 - (void)customizeInterface
 {
     
-//    UIImage* tabBarBackground = [UIImage imageNamed:@"tabbar.png"];
-//    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
-//    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selection-tab.png"]];
+    UIImage* tabBarBackground = [UIImage imageNamed:@"tabbar.png"];
+    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selection-tab.png"]];
     
 }
 
@@ -127,14 +134,39 @@
 {
     // Override point for customization after application launch.
     
-    [[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppFitnessIAPHelper sharedHelper]];
+//    [[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppFitnessIAPHelper sharedHelper]];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
-   [self customizeInterface];
-   [self initTabViewControllers];
-   [self.window setRootViewController:self.tabBarController];
-   [self.window makeKeyAndVisible];
     
+   [self customizeInterface];
+    
+   [self initTabViewControllers];
+    
+        
+    UINavigationController *nv = [[UINavigationController alloc]initWithRootViewController:self.tabBarController];
+    self.navigationController = nv;
+    [nv release];
+
+    
+    [self.window setRootViewController:self.navigationController];
+    [self.window makeKeyAndVisible];
+    
+    
+    
+    MySideMenueViewController *mySideMenuViewController = [[MySideMenueViewController alloc] init];
+    
+    
+    
+    MenuOptions options = MenuButtonEnabled|BackButtonEnabled;
+
+    
+    // make sure to display the navigation controller before calling this
+    [MFSideMenuManager configureWithNavigationController:self.navigationController
+                                      sideMenuController:mySideMenuViewController
+                                                menuSide:MenuLeftHandSide
+                                                 options:options];
+//    [mySideMenuViewController release];
+    [mySideMenuViewController release];
     
     return YES;
 }

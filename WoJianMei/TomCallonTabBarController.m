@@ -251,7 +251,7 @@
     
     
     ////////////////////Tom Callon Change it already
-	[self selectedTab:[self.buttons objectAtIndex:self.selectedIndex]];
+	[self selectedTab:[self.buttons objectAtIndex:self.tabBarController.selectedIndex]];
 
 
 }

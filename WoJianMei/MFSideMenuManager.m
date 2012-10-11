@@ -17,6 +17,16 @@
 @synthesize menuSide;
 @synthesize options;
 
+-(void)dealloc{
+
+
+    [super dealloc];
+    [navigationController release];
+    [sideMenuController release];
+    
+}
+
+
 + (MFSideMenuManager *) sharedManager {
     static dispatch_once_t once;
     static MFSideMenuManager *sharedManager;
